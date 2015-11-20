@@ -1,20 +1,27 @@
 __author__ = 'chzhu'
 
 
+class User(object):
+    def __init__(self, account, password):
+        self.acct = account
+        self.pswd = password
+
+
+
 class Spider(object):
-
-    def __init__(self, user_list):
+    def __init__(self, user_list=None, cookie_list=None):
         """
-        constructed by users
+
         :param user_list: a list of users
-        :return:
-        """
-        self.users = user_list
-
-    def __init__(self, cookie_list):
-        """
-        constructed by cookies
         :param cookie_list: a list of cookies
         :return:
         """
-        self.cookies = cookie_list
+        if user_list is not None:
+            self.users = user_list
+            self.fetchers = self.get_fetchers_by_users()
+
+    def get_fetchers_by_users(self):
+        """
+        generate fetchers by users
+        :return:
+        """
