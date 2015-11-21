@@ -1,28 +1,10 @@
 #-*- coding: UTF-8 -*-
 __author__ = 'chzhu'
 
-from Spider import User
+from Utility import open_url
 import cookielib, urllib2, urllib
 import re, json
 import base64, rsa, binascii
-
-def Excalibur(func):
-    """
-    a decorator which guarantees the success of running func
-    :param func:
-    :return:
-    """
-    def _Excalibur(opener, url):
-        while True:
-            try:
-                return func(opener, url)
-            except Exception as e:
-                print e
-    return _Excalibur
-@Excalibur
-def open_url(opener, url):
-    return opener.open(url, timeout=30).read()
-
 
 class Weibo(object):
     def __init__(self):
