@@ -31,15 +31,39 @@ class Spider(object):
 
         self.main_fetcher = 0 # current fetcher index
         self.follower_list = [] # store followers
+        self.followee_list = [] # store followees
 
     def collect_user_information(self, uid):
         print 'Collecting information for User %s...' % (uid,)
         pid = self.get_pid(uid)
 
-        self.get_followers(pid)
-        self.get_followees(uid)
+        # self.get_followers(pid)
+        print 'Followers crawled.'
+        self.get_followees(pid)
+        print 'Followees crawled.'
         self.get_timelines(uid)
         self.get_profile(uid)
+
+    def get_fetchers_by_user(self):
+        """
+        initialize self.fetchers by user
+        :return:
+        """
+        wb = Weibo()
+        for user in self.users:
+            fetcher = wb.login(user)
+            if fetcher is not None:
+                emphasis_print('User: %s login success!' % (user.acct,))
+                self.fetchers.append(fetcher)
+            else:
+                emphasis_print('User: %s login failure!' % (user.acct,))
+        print 'Get all fetchers by users!\n'
+    def get_fetchers_by_cookie(self):
+        """
+        initialize self.fetchers by cookie
+        :return:
+        """
+        pass
 
     def get_pid(self, uid):
         """
@@ -97,24 +121,47 @@ class Spider(object):
             fer_pnum = 5
         return fer_pnum
 
-    def get_fetchers_by_user(self):
+    def get_followees(self, pid):
+        fetcher = self.fetchers[self.main_fetcher]
+        url = 'http://www.weibo.com/p/' + pid + '/follow?from=page_' + pid[:6] + '&wvr=6&mod=headfollow#place'
+
+        while True:
+            html = open_url(fetcher, url)
+            fee_page_num = self.get_followee_page_num(html)
+            if fee_page_num is not None:
+                break
+
+        if fee_page_num == 0:
+            print 'He/She does not follow any one.'
+            return
+        else:
+            print 'Getting followee page 1 of %d...' % (fee_page_num,)
+            followees = self.parser.parse_followees(html, pid, datetime.now())
+            self.followee_list.extend(followees) # followees cannot be None since it's been tested in self.get_followee_page_num(html)-> self.parser.parse_followee_page_num(html)
+            if fee_page_num == 1:
+                return
+            for i in xrange(2, fee_page_num+1):
+                while True:
+                    url = 'http://www.weibo.com/p/%s/follow?from=page_%s&wvr=6&mod=headfollow&page=%d#place' % (pid, pid[:6], i)
+                    print 'Getting followee page %d of %d...' % (i, fee_page_num)
+                    html = open_url(fetcher, url)
+                    print 'Sleeping...'
+                    followees = self.parser.parse_followees(html, pid, datetime.now())
+                    if followees is None: # dirty html
+                        continue
+                    self.followee_list.extend(followees)
+                    break
+    def get_followee_page_num(self, html):
         """
-        initialize self.fetchers by user
+        get the number of followee pates, no value more than five
+        :param html:
         :return:
         """
-        wb = Weibo()
-        for user in self.users:
-            fetcher = wb.login(user)
-            if fetcher is not None:
-                emphasis_print('User: %s login success!' % (user.acct,))
-                self.fetchers.append(fetcher)
-            else:
-                emphasis_print('User: %s login failure!' % (user.acct,))
-        print 'Get all fetchers by users!'
-    def get_fetchers_by_cookie(self):
-        """
-        initialize self.fetchers by cookie
-        :return:
-        """
-        pass
+        fee_pnum = self.parser.parse_followee_page_num(html)
+        if fee_pnum is None:
+            return None
+        if fee_pnum > 6:
+            fee_pnum = 5
+        return fee_pnum
+
 
