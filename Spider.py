@@ -1,9 +1,12 @@
+# encoding=utf8
 __author__ = 'chzhu'
 
 from Weibo import Weibo
 from Utility import emphasis_print, open_url
 from Parser import HtmlParser
 from datetime import datetime
+import urllib
+import json
 
 class User(object):
     def __init__(self, account, password):
@@ -32,6 +35,8 @@ class Spider(object):
         self.main_fetcher = 0 # current fetcher index
         self.follower_list = [] # store followers
         self.followee_list = [] # store followees
+        self.timeline_list = [] # store timelines
+        self.profile_list = [] # store profiles
 
     def collect_user_information(self, uid):
         print 'Collecting information for User %s...' % (uid,)
@@ -39,9 +44,10 @@ class Spider(object):
 
         # self.get_followers(pid)
         print 'Followers crawled.'
-        self.get_followees(pid)
+        # self.get_followees(pid)
         print 'Followees crawled.'
         self.get_timelines(uid)
+        print 'Timelines crawled.'
         self.get_profile(uid)
 
     def get_fetchers_by_user(self):
@@ -164,4 +170,120 @@ class Spider(object):
             fee_pnum = 5
         return fee_pnum
 
+    def get_timelines(self, uid):
+        """
+        get all timelines of user with this uid
+        :param uid:
+        :return:
+        """
+        fetcher = self.fetchers[self.main_fetcher]
 
+        timeline_page_num, first_page = self.get_timeline_page_num(uid)
+        if timeline_page_num == 0:
+            print 'No any posts.'
+            return
+        else:
+            for pt in first_page:
+                self.timeline_list.extend(self.parser.parse_timelines(pt))
+            if timeline_page_num == 1:
+                return
+
+        timelines = []
+        for pnum in xrange(2, timeline_page_num+1):
+            for bnum in xrange(3):
+                    html = self.fetch_timelines_by_page_bar(uid, pnum, bnum)
+                    if html is not None:
+                        timelines = self.parser.parse_timelines(html)
+                        self.timeline_list.extend(timelines)
+    def fetch_timelines_by_page_bar(self, uid, pnum, bnum):
+        """
+        fetch timelines by specifying page number and bar number
+        :param uid:
+        :param pnum: page number
+        :param bnum: bar number
+        :return: html containing timelines or None if there are no timelines
+        """
+        body = { # 这个是有抓包得出的，因为新浪微博用了瀑布流动态加载，所以不能一次性得到一页中所有信息
+            '__rnd':1343647638078,
+            '_k':1343647471134109,
+            '_t':0,
+            'count':15,
+            'end_id':3473519214542343,
+            'max_id':3473279479126179,
+            'page':1,
+            'pagebar':1,
+            'pre_page':1,
+            'uid':uid
+       }
+
+        body['page'] = pnum
+
+        if bnum == 0:
+            body['count'] = '50'
+            body['pagebar'] = ''
+            body['pre_page'] = pnum-1
+        elif bnum == 1:
+            body['count'] = '15'
+            body['pagebar'] = '0'
+            body['pre_page'] = pnum
+        elif bnum == 2:
+            body['count'] = '15'
+            body['pagebar'] = '1'
+            body['pre_page'] = pnum
+
+        url = 'http://weibo.com/aj/mblog/mbloglist?' + urllib.urlencode(body)
+        while True:
+            try:
+                print 'Getting timeline page %d part %d...' % (pnum, bnum+1) # bnum starts with zero up to two
+                jsn_data = open_url(self.fetchers[self.main_fetcher], url)
+                print 'Sleeping...'
+
+                data = json.loads(jsn_data)
+                html = data['data']
+                if u'WB_feed_type SW_fun S_line2' in html:
+                    return html
+                else:
+                    return None
+            except Exception as e:
+                print e
+                continue
+    def get_timeline_page_num(self, uid):
+        """
+
+        :param uid:
+        :return: page number and one or two pages, which will decrease accesses to Sina server
+        """
+        htmls = [] # keep the pages to decrease accesses to Sina
+        while True:
+            first_page_head = self.fetch_timelines_by_page_bar(uid, 1, 0)
+            if first_page_head is None: # no any posts
+                return 0, htmls
+            else:
+                htmls.append(first_page_head)
+
+            first_page_body = self.fetch_timelines_by_page_bar(uid, 1, 1)
+            if first_page_body is None:
+                return 1, htmls
+            else:
+                htmls.append(first_page_body)
+
+            first_page_tail = self.fetch_timelines_by_page_bar(uid, 1, 2)
+            if first_page_tail is None: # just one page of timelines
+                return 1, htmls
+            else:
+                htmls.append(first_page_tail)
+
+            pnum = self.parser.parse_timeline_page_num(first_page_tail) # this page number is not accurate, so we will recount it in the next step
+            if pnum is None or pnum == 1:
+                return 1, htmls
+
+            while True:
+                url = 'http://www.weibo.com/%s?page=%d&pids=Pl_Content_HomeFeed' % (uid, pnum)
+                test_html = open_url(self.fetchers[self.main_fetcher], url)
+                no_post = 'W_icon icon_warnB'
+                if no_post in test_html:
+                    pnum -= 1 # fixing page number
+                else:
+                    print 'Sleeping...'
+                    break
+            return pnum, htmls

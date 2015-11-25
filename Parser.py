@@ -60,6 +60,7 @@ class HtmlParser(object):
 
         return max_pnum
 
+    # follower parsing
     def parse_followers(self, html, pid, timestamp):
         """
 
@@ -422,6 +423,7 @@ class HtmlParser(object):
             print e
             return '0'
 
+    # followee parsing
     def parse_followee_page_num(self, html):
         """
 
@@ -499,11 +501,11 @@ class HtmlParser(object):
         soup = BeautifulSoup(html)
         followee_list = []
         for flist in soup.find_all('ul', 'follow_list'): # maybe there are two follow list one is the common one, the other is the recommendation one
-            followee_list.extend(flist)
-        followee_list = followee_list.find_all('li', 'follow_item S_line2')
+            followee_list.extend(flist.find_all('li', 'follow_item S_line2'))
+
         for fee in followee_list: # start to parse...
             followee['uid'] = pid[6:]
-            followee['fer_uid'] = self.parse_followee_uid(fee)
+            followee['fee_uid'] = self.parse_followee_uid(fee)
             followee['name'] = self.parse_followee_name(fee)
             followee['profile_img'] = self.parse_followee_profile_img(fee)
             followee['description'] = self.parse_followee_description(fee)
@@ -525,7 +527,6 @@ class HtmlParser(object):
             followee = self.reset_followee(followee)
 
         return followees
-
     def reset_followee(self, followee):
         """
 
@@ -554,16 +555,271 @@ class HtmlParser(object):
             'timestamp':''
         }
         return followee
+    def parse_followee_uid(self, followee):
+        """
+
+        :param followee: a li tag
+        :return:
+        """
+        try:
+            data = followee['action-data']
+            data = data.split('&')
+            for dt in data:
+                if u'uid' in dt:
+                    return dt.split('=')[-1]
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_name(self, followee):
+        """
+
+        :param followee: a li tag
+        :return:
+        """
+        try:
+            data = followee['action-data']
+            data = data.split('&')
+            for dt in data:
+                if u'fnick' in dt:
+                    return dt.split('=')[-1]
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_profile_img(self, followee):
+        """
+
+        :param followee: li tag
+        :return:
+        """
+        try:
+            dt = followee.find('dt', 'mod_pic')
+            img = dt.find('a').find('img')
+            return img['src']
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_description(self, followee):
+        """
+
+        :param followee: li tag
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            des = dd.find('div', 'info_intro')
+            if des is None:
+                return None
+            return des.find('span').text
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_gender(self, followee):
+        """
+
+        :param followee: a li tag of html
+        :return:
+        """
+        try:
+            data = followee['action-data']
+            data = data.split('&')
+            for dt in data:
+                if u'sex' in dt:
+                    return dt.split('=')[-1].upper()
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_location(self, followee):
+        """
+
+        :param followee: li
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            loc = dd.find('div', 'info_add')
+            return loc.find('span').text
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_app_source(self, followee):
+        """
+
+        :param followee: a li
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            app = dd.find('div', 'info_from')
+            return app.find('a', 'from').text
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_followee_num(self, followee):
+        """
+
+        :param followee:  list item of unordered list
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            info = dd.find('div', 'info_connect')
+            if info is None:
+                return None # recommended followees are without statistics information
+            for i in info.find_all('span'):
+                if u'关注' in i:
+                    return i.find('a').text
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_follower_num(self, followee):
+        """
+
+        :param followee: li tag
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            info = dd.find('div', 'info_connect')
+            if info is None:
+                return None # recommended followees are without statistics information
+            for i in info.find_all('span'):
+                if u'粉丝' in i:
+                    return i.find('a').text
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_weibo_num(self, followee):
+        """
+
+        :param followee: li tag
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            info = dd.find('div', 'info_connect')
+            if info is None:
+                return None # recommended followees are without statistics information
+            for i in info.find_all('span'):
+                if u'微博' in i:
+                    return i.find('a').text
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_vip_level(self, followee):
+        """
+
+        :param followee: li tag of html
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            icons = dd.find('div', 'info_name W_fb W_f14')
+            vip = icons.find('a', attrs={'title':u'微博会员'})
+            if vip is None:
+                return None
+            level = vip.find('em')['class'][-1][-1]
+            return level
+        except Exception as e:
+            print e
+            return None
+    def parse_followee_verified_type(self, followee):
+        """
+
+        :param followee: li tag
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            icons = dd.find('div', 'info_name W_fb W_f14')
+            types = icons.find_all('i')
+            for tp in types:
+                try:
+                    title = tp['title']
+                except KeyError:
+                    continue
+                if u'微博个人认证' in title:
+                    return '1'
+                elif u'微博机构认证' in title:
+                    return  '2'
+            return '0'
+        except Exception as e:
+            print e
+            return '0'
+    def parse_followee_daren(self, followee):
+        """
+
+        :param followee: li tag
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            icons = dd.find('div', 'info_name W_fb W_f14')
+            daren = icons.find('i', attrs={'node-type':'daren'})
+            if daren is not None:
+                return '1'
+            else:
+                return '0'
+        except Exception as e:
+            print e
+            return '0'
+    def parse_followee_vlady(self, followee):
+        """
+
+        :param followee: a li of ul
+        :return:
+        """
+        try:
+            dd = followee.find('dd', 'mod_info S_line1')
+            icons = dd.find('div', 'info_name W_fb W_f14')
+            vlady = icons.find('i', 'W_icon icon_vlady')
+            if vlady is not None:
+                return '1'
+            return '0'
+        except Exception as e:
+            print e
+            return '0'
+
+    # timelines parsing
+    def parse_timeline_page_num(self, html):
+        """
+
+        :param html:
+        :return: timeline page number or None if exception
+        """
+        soup = BeautifulSoup(html)
+        more_pages = soup.find('div', attrs={'action-type':'feed_list_page_morelist'})
+        if more_pages is None:
+            return 1
+        else:
+            pages = more_pages.find_all('a', attrs={'action-type':'feed_list_page'})
+            try:
+                pnum = pages[0]['href'].strip(u'&pids=Pl_Content_HomeFeed').split('=')[1]
+                return int(pnum)
+            except Exception as e:
+                print e
+                return None
+    def parse_timelines(self, html):
+        """
+
+        :param html:
+        :return: a list of timelines
+        """
+        timeline_list = [] # result list
+        timeline = {
+            'mid':'',
+        }
+
+        soup = BeautifulSoup(html)
+        # to do
 
 
-
-
-
-
-
-
-
-
+        return timeline_list
 
 
 
