@@ -2,6 +2,7 @@
 __author__ = 'chzhu'
 
 from bs4 import BeautifulSoup
+from Utility import strip_blanks, deparentheses
 import json
 import re
 
@@ -804,27 +805,398 @@ class HtmlParser(object):
             except Exception as e:
                 print e
                 return None
-    def parse_timelines(self, html):
+    def parse_timelines(self, html, uid, timestamp):
         """
 
         :param html:
+        :param uid:
+        :param timestamp:
         :return: a list of timelines
         """
         timeline_list = [] # result list
-        timeline = {
-            'mid':'',
-        }
 
         soup = BeautifulSoup(html)
-        # to do
+        timelines = soup.find_all('div', 'WB_feed_type SW_fun S_line2 ') # the empty space after WB_feed_type SW_fun S_line2 is a trick, maybe some problems would come up if Sina modify his strategy
+
+        for tmln in timelines:
+            tmln_type = len(tmln.find_all('div', 'WB_text'))
+            if tmln_type == 1:
+                timeline = self.parse_timeline_original(tmln, uid, timestamp)
+                timeline_list.append(timeline)
+            else: # this timeline contains retweeted contents
+                timeline = self.parse_timeline_retweeted(tmln, uid, timestamp)
+                timeline_list.extend(timeline)
 
 
         return timeline_list
 
 
+    def parse_timeline_original(self, tmln, uid, timestamp):
+        """
+        parse original part of timeline
+        :param tmln: timeline
+        :param uid:
+        :param timestamp:
+        :return: a timeline dict
+        """
+        timeline = {
+            'mid':'',
+            'encrypted_mid':'',
+            'uid':'',
+            'retweet':'',
+            'comment':'',
+            'favourite':'',
+            'created_at':'',
+            'app_source':'',
+            'text':'',
+            'entity':'',
+            'source_mid':'',
+            'source_uid':'',
+            'mentions':'',
+            'check_in':'',
+            'check_in_url':'',
+            'is_deleted':'0',
+            'timestamp':timestamp
+        }
 
+        timeline['mid'] = self.parse_timeline_original_mid(tmln)
+        timeline['encrypted_mid'] = self.parse_timeline_original_encrypted_mid(tmln) # www.weibo.com/uid/encrypted_mid is the page of timeline
+        timeline['uid'] = uid
+        timeline['retweet'] = self.parse_timeline_original_retweet(tmln)
+        timeline['comment'] = self.parse_timeline_original_comment(tmln)
+        timeline['favourite'] = self.parse_timeline_original_favourite(tmln)
+        timeline['created_at'] = self.parse_timeline_original_created_at(tmln)
+        timeline['app_source'] = self.parse_timeline_original_app_source(tmln)
+        timeline['text'] = self.parse_timeline_original_text(tmln)
+        timeline['entity'] = self.parse_timeline_original_entities(tmln)
+        timeline['mentions'] = self.parse_timeline_original_mentions(tmln)
+        timeline['check_in'] = self.parse_timeline_original_check_in(tmln)
+        timeline['check_in_url'] = self.parse_timeline_original_check_in_url(tmln)
 
+        return timeline
+    def parse_timeline_original_mid(self, timeline):
+        """
 
+        :param timeline:
+        :return: mid
+        """
+        try:
+            mid = timeline['mid']
+            return mid
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_encrypted_mid(self, timeline):
+        """
 
+        :param timeline:
+        :return: encrypted mid
+        """
+        try:
+            created_time = timeline.find('a', 'S_link2 WB_time')
+            encrypted_mid = created_time['href'].split('/')[-1]
+            return encrypted_mid
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_retweet(self, timeline):
+        """
+
+        :param timeline:
+        :return: retweet number
+        """
+        try:
+            handle = timeline.find('div', 'WB_handle')
+            statuses = handle.find_all('a')
+            for stat in statuses:
+                if u'feed_list_forward' in stat['action-type']:
+                    retweet = stat.text.strip(u'转发 ')
+                    retweet = deparentheses(retweet)
+                    if retweet.isdigit():
+                        return retweet
+                    else:
+                        return '0'
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_comment(self, timeline):
+        """
+
+        :param timeline:
+        :return: comment num
+        """
+        try:
+            handle = timeline.find('div', 'WB_handle')
+            statuses = handle.find_all('a')
+            for stat in statuses:
+                if u'feed_list_comment' in stat['action-type']:
+                    comment = stat.text.strip(u'评论 ')
+                    comment = deparentheses(comment)
+                    if comment.isdigit():
+                        return comment
+                    else:
+                        return '0'
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_favourite(self, timeline):
+        """
+
+        :param timeline:
+        :return: favourite number
+        """
+        try:
+            handle = timeline.find('div', 'WB_handle')
+            statuses = handle.find_all('a')
+            for stat in statuses:
+                if u'feed_list_like' in stat['action-type']:
+                    favor = stat.text
+                    favor = deparentheses(favor)
+                    if favor.isdigit():
+                        return favor
+                    else:
+                        return '0'
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_created_at(self, timeline):
+        """
+
+        :param timeline:
+        :return: timeline created time
+        """
+        created_time = timeline.find('a', 'S_link2 WB_time')
+        try:
+            return created_time['title']
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_app_source(self, timeline):
+        """
+
+        :param timeline:
+        :return: created app source
+        """
+        app_source = timeline.find('a', attrs={'action-type':'app_source', 'class':'S_link2'})
+        if app_source is not None:
+            return app_source.text
+        else:
+            return None
+    def parse_timeline_original_text(self, timeline):
+        """
+
+        :param timeline:
+        :return: weibo text
+        """
+        try:
+            text = timeline.find('div', 'WB_text').text
+            # text = strip_blanks(text)
+            return text
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_entities(self, timeline):
+        """
+
+        :param timeline:
+        :return: entities such as links, videos, audios and so on
+        """
+        entities = {
+            'img':'',
+            'link':'',
+            'audio':'',
+            'video':'',
+            'event':'',
+            'product':'',
+            'others':''
+        }
+
+        entities['img'] = self.parse_timeline_original_img(timeline)
+
+        try:
+            text = timeline.find('div', 'WB_text')
+            media_box = text.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+            for media in media_box:
+                if media.find('i', 'W_ficon ficon_cd_link S_ficon') is not None:
+                    entities['link'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_music S_ficon') is not None:
+                    entities['audio'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_video S_ficon') is not None:
+                    entities['video'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_event S_ficon') is not None:
+                    entities['event'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_product S_ficon') is not None:
+                    entities['product'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    continue # exclude check in
+                else: # for unknown situations
+                    entities['others'] += media['title'] + ', ' + media['href'] + '; '
+
+            entity_str = ''
+            for key in entities:
+                if entities[key] == '':
+                    continue
+                entity_str += key + ':' + entities[key].strip('; ') + ' & '
+            return entity_str.strip(' & ')
+        except Exception as e:
+            print e
+            return ''
+    def parse_timeline_original_mentions(self, timeline):
+        """
+
+        :param timeline:
+        :return: people be mentioned by the user
+        """
+        try:
+            text = timeline.find('div', 'WB_text')
+            mention_list = text.find_all('a', {'extra-data':'type=atname'})
+            mentions = ''
+            for mention in mention_list:
+                mentions += mention.text + ', '
+            return mentions.strip(', ')
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_check_in(self, timeline):
+        """
+
+        :param timeline:
+        :return: check in location
+        """
+        try:
+            text = timeline.find('div', 'WB_text')
+            media_box = text.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+            for media in media_box:
+                if media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    check_in = media['title']
+                    return check_in
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_check_in_url(self, timeline):
+        """
+
+        :param timeline:
+        :return: check in location url
+        """
+        try:
+            text = timeline.find('div', 'WB_text')
+            media_box = text.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+            for media in media_box:
+                if media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    check_in_url = media['href']
+                    return check_in_url
+            return None
+        except Exception as e:
+            print e
+            return None
+    def parse_timeline_original_img(self, timeline):
+        """
+
+        :param timeline:
+        :return: img urls
+        """
+        imgs = timeline.find('ul', 'WB_media_list clearfix')
+        if imgs is None:
+            return ''
+        img_urls = ''
+        for i in imgs.find_all('img', 'bigcursor'):
+            img_urls += i['src'] + ', '
+        return img_urls.strip(', ')
+
+    def parse_timeline_retweeted(self, timeline, uid, timestamp):
+        """
+
+        :param timeline:
+        :param uid:
+        :param timestamp:
+        :return: timeline and source timeline
+        """
+        rtmln = { # retweet timeline
+            'mid':'',
+            'encrypted_mid':'',
+            'uid':uid,
+            'retweet':'',
+            'comment':'',
+            'favourite':'',
+            'created_at':'',
+            'app_source':'',
+            'text':'',
+            'entity':'',
+            'source_mid':'',
+            'source_uid':'',
+            'mentions':'',
+            'check_in':'',
+            'check_in_url':'',
+            'is_deleted':'0',
+            'timestamp':timestamp
+        }
+        stmln = { # source timeline
+            'mid':'',
+            'encrypted_mid':'',
+            'uid':'',
+            'retweet':'',
+            'comment':'',
+            'favourite':'',
+            'created_at':'',
+            'app_source':'',
+            'text':'',
+            'entity':'',
+            'source_mid':'',
+            'source_uid':'',
+            'mentions':'',
+            'check_in':'',
+            'check_in_url':'',
+            'is_deleted':'0',
+            'timestamp':timestamp
+        }
+        rtmln['mid'], stmln['mid'] = self.parse_timeline_retweeted_mid(timeline)
+        rtmln['encrypted_mid'], stmln['encrypted_mid'] = self.parse_timeline_retweeted_encrypted_mid(timeline)
+        stmln['uid'] = self.parse_timeline_retweeted_uid(timeline)
+
+        print 'to do '
+
+    def parse_timeline_retweeted_mid(self, timeline):
+        """
+
+        :param timeline:
+        :return: mid rmid and source mid smid
+        """
+        try:
+            rmid = timeline['mid']
+            smid = timeline['omid']
+            return rmid, smid
+        except KeyError as ke:
+            print ke
+            return None, None
+    def parse_timeline_retweeted_encrypted_mid(self, timeline):
+        """
+
+        :param timeline:
+        :return: encrypted mid ret_encrypted_mid and source encrypted mid src_encrypted_mid
+        """
+        ret_created_time = timeline.find('a', 'S_link2 WB_time')
+        src_created_time = timeline.find('a', 'S_func2 WB_time')
+        try:
+            ret_encrypted_mid = ret_created_time['href'].split('/')[-1]
+            src_encrypted_mid = src_created_time['href'].split('/')[-1]
+            return  ret_encrypted_mid, src_encrypted_mid
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_uid(self, timeline):
+        """
+
+        :param timeline:
+        :return: source uid
+        """
+        try:
+            uids = timeline['tbinfo'].split(u'&')
+            suid = uids[1].split('=')[1]
+            return suid
+        except Exception as e:
+            print e
+            return None
 
 

@@ -184,7 +184,7 @@ class Spider(object):
             return
         else:
             for pt in first_page:
-                self.timeline_list.extend(self.parser.parse_timelines(pt))
+                self.timeline_list.extend(self.parser.parse_timelines(pt, uid, datetime.now()))
             if timeline_page_num == 1:
                 return
 
@@ -193,7 +193,7 @@ class Spider(object):
             for bnum in xrange(3):
                     html = self.fetch_timelines_by_page_bar(uid, pnum, bnum)
                     if html is not None:
-                        timelines = self.parser.parse_timelines(html)
+                        timelines = self.parser.parse_timelines(html, uid, datetime.now())
                         self.timeline_list.extend(timelines)
     def fetch_timelines_by_page_bar(self, uid, pnum, bnum):
         """

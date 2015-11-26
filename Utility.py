@@ -42,3 +42,15 @@ def loop_increase(integer, base):
     :return:
     """
     return (integer + 1) % base
+
+def strip_blanks(string):
+    string = string.replace('\r', '').replace('\n', '').replace('\t', '')
+    string = string.strip(' ')
+    return string
+def deparentheses(string):
+    """
+    strip '(' and ')'
+    :param string:
+    :return:
+    """
+    return string.strip('(').strip(')')
