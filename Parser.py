@@ -830,7 +830,6 @@ class HtmlParser(object):
 
         return timeline_list
 
-
     def parse_timeline_original(self, tmln, uid, timestamp):
         """
         parse original part of timeline
@@ -1036,6 +1035,7 @@ class HtmlParser(object):
             for key in entities:
                 if entities[key] == '':
                     continue
+                entities[key] = entities[key].strip('; ')
                 entity_str += key + ':' + entities[key].strip('; ') + ' & '
             return entity_str.strip(' & ')
         except Exception as e:
@@ -1154,9 +1154,20 @@ class HtmlParser(object):
         rtmln['mid'], stmln['mid'] = self.parse_timeline_retweeted_mid(timeline)
         rtmln['encrypted_mid'], stmln['encrypted_mid'] = self.parse_timeline_retweeted_encrypted_mid(timeline)
         stmln['uid'] = self.parse_timeline_retweeted_uid(timeline)
+        rtmln['retweet'], stmln['retweet'] = self.parse_timeline_retweeted_retweet(timeline)
+        rtmln['comment'], stmln['comment'] = self.parse_timeline_retweeted_comment(timeline)
+        rtmln['favourite'], stmln['favourite'] = self.parse_timeline_retweeted_favourite(timeline)
+        rtmln['created_at'], stmln['created_at'] = self.parse_timeline_retweeted_created_time(timeline)
+        rtmln['app_source'], stmln['app_source'] = self.parse_timeline_retweeted_app_source(timeline)
+        rtmln['text'], stmln['text'] = self.parse_timeline_retweeted_text(timeline)
+        rtmln['entity'], stmln['entity'] = self.parse_timeline_retweeted_entities(timeline)
+        rtmln['source_mid'] = stmln['mid']
+        rtmln['source_uid'] = stmln['uid']
+        rtmln['mentions'], stmln['mentions'] = self.parse_timeline_retweeted_mentions(timeline)
+        rtmln['check_in'], rtmln['check_in_url'], stmln['check_in'], stmln['check_in_url'] = self.parse_timeline_retweeted_check_in(timeline)
 
-        print 'to do '
 
+        return rtmln, stmln
     def parse_timeline_retweeted_mid(self, timeline):
         """
 
@@ -1198,5 +1209,341 @@ class HtmlParser(object):
         except Exception as e:
             print e
             return None
+    def parse_timeline_retweeted_retweet(self, timeline):
+        '''
 
+        :param timeline:
+        :return: retweet number rretweet and source weibo retweet number ssretweet
+        '''
+
+        try:
+            handles = timeline.find_all('div', 'WB_handle')
+
+            rstatuses = handles[1].find_all('a')
+            sstatuses = handles[0].find_all('a')
+
+            for stat in rstatuses:
+                if u'feed_list_forward' in stat['action-type']:
+                    rretweet = stat.text.strip(u'转发')
+                    rretweet = deparentheses(rretweet)
+                    if rretweet.isdigit():
+                        break
+                    else:
+                        rretweet = '0'
+                        break
+
+            for stat in sstatuses:
+                if u'转发' in stat.text:
+                    ssretweet = stat.text.strip(u'转发')
+                    ssretweet = deparentheses(ssretweet)
+                    if ssretweet.isdigit():
+                        return rretweet, ssretweet
+                    else:
+                        return rretweet, '0'
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_comment(self, timeline):
+        '''
+
+        :param timeline:
+        :return: comment number rcomment and source weibo comment number scomment
+        '''
+        try:
+            handles = timeline.find_all('div', 'WB_handle')
+
+            rstatuses = handles[1].find_all('a')
+            sstatuses = handles[0].find_all('a')
+
+            for stat in rstatuses:
+                if u'feed_list_comment' in stat['action-type']:
+                    rcomment = stat.text.strip(u'评论')
+                    rcomment = deparentheses(rcomment)
+                    if rcomment.isdigit():
+                        break
+                    else:
+                        rcomment = '0'
+                        break
+
+            for stat in sstatuses:
+                if u'评论' in stat.text:
+                    scomment = stat.text.strip(u'评论')
+                    scomment = deparentheses(scomment)
+                    if scomment.isdigit():
+                        return rcomment, scomment
+                    else:
+                        return rcomment, '0'
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_favourite(self, timeline):
+        '''
+
+        :param timeline:
+        :return: favourite number fvrt1 and source weibo favourite number fvrt2
+        '''
+        try:
+            handles = timeline.find_all('div', 'WB_handle')
+
+            rstatuses = handles[1].find_all('a')
+            sstatuses = handles[0].find_all('a')
+
+            for stat in rstatuses:
+                if u'feed_list_like' in stat['action-type']:
+                    fvrt1 = stat.text
+                    fvrt1 = deparentheses(fvrt1)
+                    if fvrt1.isdigit():
+                        break
+                    else:
+                        fvrt1 = '0'
+                        break
+
+            for stat in sstatuses:
+                if u'评论' in stat.text:
+                    continue
+                elif u'转发' in stat.text:
+                    continue
+                else:
+                    fvrt2 = stat.text
+                    fvrt2 = deparentheses(fvrt2)
+                    if fvrt2.isdigit():
+                        return fvrt1, fvrt2
+                    else:
+                        return fvrt1, '0'
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_created_time(self, timeline):
+        '''
+
+        :param timeline:
+        :return: created time ct1 and source weibo created time ct2
+        '''
+
+        ct1 = timeline.find('a', 'S_link2 WB_time')
+        ct2 = timeline.find('a', 'S_func2 WB_time')
+        try:
+            ct1 = ct1['title']
+            ct2 = ct2['title']
+            return ct1, ct2
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_app_source(self, timeline):
+        '''
+
+        :param timeline:
+        :return: weibo app source app1 and source weibo app source app2
+        '''
+        app1 = timeline.find('a', attrs={'action-type':'app_source', 'class':'S_link2'})
+        app2 = timeline.find('a', attrs={'action-type':'app_source', 'class':'S_func2'})
+
+        try:
+            app1 = app1.text
+            app2 = app2.text
+            return app1, app2
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_text(self, timeline):
+        '''
+
+        :param timeline:
+        :return: weibo text txt1 and source weibo text txt2
+        '''
+        texts = timeline.find_all('div', 'WB_text')
+        mention = timeline.find('a', 'WB_name S_func3').text
+
+        try:
+            txt1 = texts[0].text
+            txt2 = texts[1].text
+            txt1 += '//' + mention + ' ' + txt2
+        except Exception as e:
+            print e
+            return None, None
+
+        return txt1, txt2
+    def parse_timeline_retweeted_entities(self, timeline):
+        '''
+
+        :param timeline:
+        :return: entities ent1 and source weibo entities ent2 such as links, audio, video and so on
+        '''
+        ents1 = {
+            'img':'',
+            'link':'',
+            'audio':'',
+            'video':'',
+            'event':'',
+            'product':'',
+            'others':''
+        }
+        ents2 = {
+            'img':'',
+            'link':'',
+            'audio':'',
+            'video':'',
+            'event':'',
+            'product':'',
+            'others':''
+        }
+
+        ents1['img'], ents2['img'] = self.parse_timeline_retweeted_img(timeline)
+
+        txts = timeline.find_all('div', 'WB_text')
+        try:
+            txt1 = txts[0]
+            txt2 = txts[1]
+
+            media_box1 = txt1.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+            media_box2 = txt2.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+
+            for media in media_box1: # parse entities
+                if media.find('i', 'W_ficon ficon_cd_link S_ficon') is not None:
+                    ents1['link'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_music S_ficon') is not None:
+                    ents1['audio'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_video S_ficon') is not None:
+                    ents1['video'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_event S_ficon') is not None:
+                    ents1['event'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_product S_ficon') is not None:
+                    ents1['product'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    continue # exclude check in
+                else: # for unknown situations
+                    ents1['others'] += media['title'] + ', ' + media['href'] + '; '
+
+            for media in media_box2: # parse source weibo entities
+                if media.find('i', 'W_ficon ficon_cd_link S_ficon') is not None:
+                    ents2['link'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_music S_ficon') is not None:
+                    ents2['audio'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_video S_ficon') is not None:
+                    ents2['video'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_event S_ficon') is not None:
+                    ents2['event'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_product S_ficon') is not None:
+                    ents2['product'] += media['title'] + ', ' + media['href'] + '; '
+                elif media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    continue # exclude check in
+                else: # for unknown situations
+                    ents2['others'] += media['title'] + ', ' + media['href'] + '; '
+        except Exception as e:
+            print e
+            return None, None
+
+        # glue to strings
+        ent1 = ''
+        for key in ents1:
+            if ents1[key] is None or ents1[key] == '':
+                continue
+            ents1[key] = ents1[key].strip('; ')
+            ent1 += key + ':' + ents1[key] + ' & '
+        ent1 = ent1.strip(' & ')
+
+        ent2 = ''
+        for key in ents2:
+            if ents2[key] is None or ents2[key] == '':
+                continue
+            ents2[key] = ents2[key].strip('; ')
+            ent2 += key + ':' + ents2[key] + ' & '
+        ent2 = ent2.strip(' & ')
+
+        return ent1, ent2
+    def parse_timeline_retweeted_img(self, timeline):
+        '''
+
+        :param timeline:
+        :return: pics and source weibo pics in the form of url string, i.e., img1 and img2
+        '''
+        img1 = ''
+        img2 = ''
+
+        try:
+            img1_elements = timeline.find('div', 'WB_arrow')
+            img1_elements = img1_elements.find_all('img', attrs={'class':'bigcursor', 'action-type':'fl_pics'})
+
+            img2_elements = timeline.find('div', attrs={'node-type':'feed_list_media_prev'})
+            img2_elements = img2_elements.find_all('img', attrs={'class':'bigcursor', 'action-type':'fl_pics'})
+
+            for ie in img1_elements:
+                img1 += ie['src'] + ', '
+            img1 = img1.strip(', ')
+
+            for ie in img2_elements:
+                img2 += ie['src'] + ', '
+            img2 = img2.strip(', ')
+        except Exception as e:
+            print e
+            return None, None
+
+        return img1, img2
+    def parse_timeline_retweeted_mentions(self, timeline):
+        '''
+
+        :param timeline:
+        :return: mentions string and source weibo mentions string, mnt1 and mnt2
+        '''
+        mnt1 = ''
+        mnt2 = ''
+
+        txts = timeline.find_all('div', 'WB_text')
+        mention = timeline.find('a', 'WB_name S_func3').text
+
+        try:
+            txt1 = txts[0].text
+            txt2 = txts[1].text
+
+            mentions1 = txts[0].find_all('a', attrs={'extra-data':'type=atname'})
+            mentions2 = txts[1].find_all('a', attrs={'extra-data':'type=atname'})
+
+            for m in mentions1:
+                mnt1 += m.text + ', '
+
+            for m in mentions2:
+                mnt2 += m.text + ', '
+            mnt2 = mnt2.strip(', ')
+
+            mnt1 += mention + ', ' +mnt2
+            mnt1 = mnt1.strip(', ')
+
+            return mnt1, mnt2
+        except Exception as e:
+            print e
+            return None, None
+    def parse_timeline_retweeted_check_in(self, timeline):
+        '''
+
+        :param timeline:
+        :return: check_in1:check in location, url1:check in url, check_in2:source weibo check in location, url2:source weibo check in url
+        '''
+        txts = timeline.find_all('div', 'WB_text')
+
+        check_in1 = url1 = check_in2 = url2 = ''
+
+        try:
+            txt1 = txts[0]
+            txt2 = txts[1]
+
+            media_box1 = txt1.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+            media_box2 = txt2.find_all('a', 'W_btn_b btn_22px W_btn_cardlink')
+
+            for media in media_box1:
+                if media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    check_in1 = media['title']
+                    url1 = media['href']
+                    break
+
+            for media in media_box2:
+                if media.find('i', 'W_ficon ficon_cd_place S_ficon') is not None:
+                    check_in2 = media['title']
+                    url2 = media['href']
+                    break
+
+            return check_in1, url1, check_in2, url2
+
+        except Exception as e:
+            print e
+            return None, None, None, None
 
