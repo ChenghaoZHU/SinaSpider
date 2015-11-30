@@ -46,9 +46,10 @@ class Spider(object):
         print 'Followers crawled.'
         # self.get_followees(pid)
         print 'Followees crawled.'
-        self.get_timelines(uid)
+        # self.get_timelines(uid)
         print 'Timelines crawled.'
-        self.get_profile(uid)
+        self.get_profile(pid)
+        print 'Pofile crawled.'
 
     def get_fetchers_by_user(self):
         """
@@ -126,7 +127,6 @@ class Spider(object):
         if fer_pnum > 6:
             fer_pnum = 5
         return fer_pnum
-
     def get_followees(self, pid):
         fetcher = self.fetchers[self.main_fetcher]
         url = 'http://www.weibo.com/p/' + pid + '/follow?from=page_' + pid[:6] + '&wvr=6&mod=headfollow#place'
@@ -169,7 +169,6 @@ class Spider(object):
         if fee_pnum > 6:
             fee_pnum = 5
         return fee_pnum
-
     def get_timelines(self, uid):
         """
         get all timelines of user with this uid
@@ -287,3 +286,36 @@ class Spider(object):
                     print 'Sleeping...'
                     break
             return pnum, htmls
+    def get_profile(self, pid):
+        '''
+        get profile information for User marked with pid
+        :param pid: page id
+        :return:
+        '''
+        fetcher = self.fetchers[self.main_fetcher]
+        url = 'http://www.weibo.com/p/%s/info?mod=pedit_more' % (pid,)
+
+        uid = pid[6:]
+        is_taobao = None
+        while is_taobao is None:
+            is_taobao = self.is_taobao(uid) # get taobao information in advance
+
+        profile = None
+        while profile is None:
+            html = open_url(fetcher, url)
+            profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
+        self.profile_list.append(profile)
+    def is_taobao(self, uid):
+        '''
+
+        :param uid: user ID
+        :return: a boolean value ('1' or '0') indicating whether user is a taobao shopkeeper
+        '''
+        fetcher = self.fetchers[self.main_fetcher]
+        url = 'http://www.weibo.com/u/' + uid
+        html = open_url(fetcher, url)
+
+        return self.parser.parse_is_taobao(html)
+
+
+

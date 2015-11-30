@@ -60,8 +60,34 @@ class HtmlParser(object):
                 continue
 
         return max_pnum
+    def parse_is_taobao(self, html):
+        '''
 
-    # follower parsing
+        :param html:
+        :return: '1' is taobao, '0' is not
+        '''
+        keyword = 'W_icon icon_taobao'
+        soup = BeautifulSoup(html)
+        scripts = soup.find_all('script')
+        script = None
+        for scr in scripts:
+            if u'PCD_person_info' in scr.text:
+                script = scr
+                break
+        if script is None:
+            return None # dirty html
+
+        html = self.covert_script_to_hmtl(script)
+        soup = BeautifulSoup(html)
+        person_info = soup.find('div', 'PCD_person_info')
+        taobao = person_info.find('em', keyword)
+
+        if taobao is not None:
+            return '1'
+        else:
+            return '0'
+
+    ######################################## follower parsing ###################################################
     def parse_followers(self, html, pid, timestamp):
         """
 
@@ -423,8 +449,9 @@ class HtmlParser(object):
         except Exception as e:
             print e
             return '0'
+    #############################################################################################################
 
-    # followee parsing
+    ####################################### followee parsing ####################################################
     def parse_followee_page_num(self, html):
         """
 
@@ -785,8 +812,9 @@ class HtmlParser(object):
         except Exception as e:
             print e
             return '0'
+    #############################################################################################################
 
-    # timelines parsing
+    ######################################## timelines parsing ##################################################
     def parse_timeline_page_num(self, html):
         """
 
@@ -1460,13 +1488,21 @@ class HtmlParser(object):
         img1 = ''
         img2 = ''
 
+        img1_elements = timeline.find('div', 'WB_arrow')
+        # img1_elements = img1_elements.find_all('img', attrs={'class':'bigcursor', 'action-type':'fl_pics'})
+        if img1_elements is not None:
+            img1_elements = img1_elements.find_all('img', 'bigcursor')
+        else:
+            img1_elements = []
+
+        img2_elements = timeline.find('div', attrs={'node-type':'feed_list_media_prev'})
+        # img2_elements = img2_elements.find_all('img', attrs={'class':'bigcursor', 'action-type':'fl_pics'})
+        if img2_elements is not None:
+            img2_elements = img2_elements.find_all('img', 'bigcursor')
+        else:
+            img2_elements = []
+
         try:
-            img1_elements = timeline.find('div', 'WB_arrow')
-            img1_elements = img1_elements.find_all('img', attrs={'class':'bigcursor', 'action-type':'fl_pics'})
-
-            img2_elements = timeline.find('div', attrs={'node-type':'feed_list_media_prev'})
-            img2_elements = img2_elements.find_all('img', attrs={'class':'bigcursor', 'action-type':'fl_pics'})
-
             for ie in img1_elements:
                 img1 += ie['src'] + ', '
             img1 = img1.strip(', ')
@@ -1547,3 +1583,191 @@ class HtmlParser(object):
             print e
             return None, None, None, None
 
+    def parse_profile(self, html, pid, is_taobao, timestamp):
+        '''
+        parse profile information
+        :param html:
+        :param pid:
+        :param is_taobao:
+        :param timestamp:
+        :return: a dict displaying profile
+        '''
+        soup = BeautifulSoup(html)
+        scripts = soup.find_all('script')
+        frame_a = None # frame that contains avatar, background ...
+        frame_b = None # frame that contains daren and credit information
+        frame_c = None # frame that contains basic information
+        counter = None # counter statistic for the followee number, follower number and weibo number
+
+        for scr in scripts:
+            if ur'<h2 class=\"main_title W_fb W_f14\">基本信息' in scr.text:
+                frame_c = scr
+            elif ur'<a class=\"S_txt1\" href=\"javascript:void(0);\">等级信息' in scr.text:
+                frame_b = scr
+            elif ur'class=\"photo\"' in scr.text:
+                frame_a = scr
+            elif ur'<table class=\"tb_counter\"' in scr.text:
+                counter = scr
+
+        if frame_a is None or frame_b is None or frame_c is None or counter is None:
+            return None # dirty html
+
+        html = self.covert_script_to_hmtl(frame_a)
+        frame_a = BeautifulSoup(html)
+
+        html = self.covert_script_to_hmtl(frame_b)
+        frame_b = BeautifulSoup(html)
+
+        html = self.covert_script_to_hmtl(frame_c)
+        frame_c = BeautifulSoup(html)
+
+        html = self.covert_script_to_hmtl(counter)
+        counter = BeautifulSoup(html)
+
+        profile = self.init_profile({})
+        profile['uid'] = pid[6:]
+        profile['nickname'] = self.parse_profile_nick(frame_a)
+        profile['name'] = self.parse_profile_name(frame_c)
+        profile['location'] = self.parse_profile_location(frame_c)
+        profile['gender'] = self.parse_profile_gender(frame_a)
+
+        return profile
+
+    def parse_profile_nick(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: nick name
+        '''
+        nick = frame.find('h1', 'username')
+        try:
+            nick = nick.text
+            return nick
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_name(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'真实姓名：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no real name found
+    def parse_profile_location(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'所在地：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no real name found
+    def parse_profile_gender(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        if frame.find('i', 'W_icon icon_pf_male') is not None:
+            return 'M'
+        elif frame.find('i', 'W_icon icon_pf_female') is not None:
+            return 'F'
+        else:
+            return None # 双兔傍地走，安能辨我是雄雌？
+
+
+    def init_profile(self, dict):
+        '''
+
+        :param dict: a dict reference
+        :return: a dict defines a profile
+        '''
+        dict = {
+            'uid':'',
+            'nickname':'',
+            'name':'',
+            'location':'',
+            'gender':'',
+            'sexual_orientation':'',
+            'relationship_status':'',
+            'birthday':'',
+            'blood_type':'',
+            'blog':'',
+            'description':'',
+            'email':'',
+            'QQ':'',
+            'MSN':'',
+            'tag':'',
+            'followee_num':'',
+            'follower_num':'',
+            'weibo_num':'',
+            'created_at':'',
+            'profile_img':'',
+            'domain_id':'',
+            'domain_name':'',
+            'level':'',
+            'experience':'',
+            'credit_level':'',
+            'credit_point':'',
+            'credit_history':'',
+            'is_vip':'',
+            'vip_level':'',
+            'is_yearly_paid':'',
+            'is_verified':'',
+            'verified_reason':'',
+            'is_daren':'',
+            'daren_type':'',
+            'daren_point':'',
+            'daren_interest':'',
+            'is_taobao':'',
+            'not_exist':'0',
+            'timestamp':'',
+            'Education':[],
+            'Job':[]
+        }
+
+        return dict
