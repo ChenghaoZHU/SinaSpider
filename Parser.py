@@ -1630,6 +1630,24 @@ class HtmlParser(object):
         profile['name'] = self.parse_profile_name(frame_c)
         profile['location'] = self.parse_profile_location(frame_c)
         profile['gender'] = self.parse_profile_gender(frame_a)
+        profile['sexual_orientation'] = self.parse_profile_sexual_orientation(frame_c)
+        profile['relationship_status'] = self.parse_profile_relationship_status(frame_c)
+        profile['birthday'] = self.parse_profile_birthday(frame_c)
+        profile['blood_type'] = self.parse_profile_blood_type(frame_c)
+        profile['blog'] = self.parse_profile_blog(frame_c)
+        profile['description'] = self.parse_profile_description(frame_c)
+        profile['email'] = self.parse_profile_email(frame_c)
+        profile['QQ'] = self.parse_profile_QQ(frame_c)
+        profile['MSN'] = self.parse_profile_MSN(frame_c)
+        profile['tag'] = self.parse_profile_tag(frame_c)
+
+        profile['followee_num'] = self.parse_profile_followee_num(counter)
+        profile['follower_num'] = self.parse_profile_follower_num(counter)
+        profile['weibo_num'] = self.parse_profile_weibo_num(counter)
+        profile['created_at'] = self.parse_profile_created_time(frame_c)
+        profile['profile_img'] = self.parse_profile_img(frame_a)
+        profile['domain_id'] = pid
+        profile['domain_name'] = self.parse_profile_domain(frame_c)
 
         return profile
 
@@ -1705,7 +1723,7 @@ class HtmlParser(object):
                 print e
                 return None
 
-        return '' # no real name found
+        return '' # no location found
     def parse_profile_gender(self, frame):
         '''
 
@@ -1718,7 +1736,432 @@ class HtmlParser(object):
             return 'F'
         else:
             return None # 双兔傍地走，安能辨我是雄雌？
+    def parse_profile_sexual_orientation(self, frame):
+        '''
 
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'性取向：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return strip_blanks(value.text) # original text contains lots of \t, it's waste of space
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no sexual orientation
+    def parse_profile_relationship_status(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'感情状况：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return strip_blanks(value.text) # original text contains lots of \t, it's waste of space
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no relationship status
+    def parse_profile_birthday(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'生日：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no birthday
+    def parse_profile_blood_type(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'血型：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no blood type
+    def parse_profile_blog(self, frame):
+        '''
+
+        :param frame:bs object
+        :return: blog url
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'博客：' in key.text:
+                    value = it.find('a')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no blog
+    def parse_profile_description(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'简介：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no description
+    def parse_profile_email(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        contact_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'联系信息' in title.text:
+                contact_information = cd
+
+        if contact_information is None:
+            return '' # no contact information
+
+        items = contact_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'邮箱：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no email address
+    def parse_profile_QQ(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        contact_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'联系信息' in title.text:
+                contact_information = cd
+
+        if contact_information is None:
+            return '' # no contact information
+
+        items = contact_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'QQ：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no QQ
+    def parse_profile_MSN(self, frame):
+        '''
+
+        :param frame:
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        contact_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'联系信息' in title.text:
+                contact_information = cd
+
+        if contact_information is None:
+            return '' # no contact information
+
+        items = contact_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'MSN：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return value.text
+            except Exception as e:
+                print e
+                return None
+
+        return '' # no MSN
+    def parse_profile_tag(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        tag_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'标签信息' in title.text:
+                tag_information = cd
+
+        if tag_information is None:
+            return '' # no tag information
+
+        tags = tag_information.find_all('a', 'W_btn_b W_btn_tag')
+        tag = ''
+        for t in tags:
+            try:
+                item = t.text
+                item = strip_blanks(item) # save space
+            except Exception as e:
+                print e
+                continue
+            tag += item + ', '
+        tag = tag.strip(', ')
+        return tag
+    def parse_profile_followee_num(self, counter):
+        '''
+
+        :param counter: bs object
+        :return:
+        '''
+        table = counter.find('table', 'tb_counter') # can not be None, since be checked in counter
+        data = table.find_all('td', 'S_line1')
+
+        for d in data:
+            try:
+                if u'关注' in d.text:
+                    num = d.find('strong', 'W_f18').text
+                    return num
+            except Exception as e:
+                print e
+                return None
+        return None # problem
+    def parse_profile_follower_num(self, counter):
+        '''
+
+        :param counter: bs object
+        :return:
+        '''
+        table = counter.find('table', 'tb_counter') # can not be None, since be checked in counter
+        data = table.find_all('td', 'S_line1')
+
+        for d in data:
+            try:
+                if u'粉丝' in d.text:
+                    num = d.find('strong', 'W_f18').text
+                    return num
+            except Exception as e:
+                print e
+                return None
+        return None # problem
+    def parse_profile_weibo_num(self, counter):
+        '''
+
+        :param counter: bs object
+        :return:
+        '''
+        table = counter.find('table', 'tb_counter') # can not be None, since be checked in counter
+        data = table.find_all('td', 'S_line1')
+
+        for d in data:
+            try:
+                if u'微博' in d.text:
+                    num = d.find('strong', 'W_f18').text
+                    return num
+            except Exception as e:
+                print e
+                return None
+        return None # problem
+    def parse_profile_created_time(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'注册时间：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return strip_blanks(value.text) # save storage
+            except Exception as e:
+                print e
+                return None
+
+        return '' # created time missing
+    def parse_profile_img(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: avatar url
+        '''
+        photo = frame.find('img', 'photo')
+        try:
+            return photo['src']
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_domain(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        basic_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'基本信息' in title.text:
+                basic_information = cd
+
+        if basic_information is None:
+            return None # dirty page, may not happen
+
+        items = basic_information.find_all('li', 'li_1 clearfix')
+        for it in items:
+            key = it.find('span', 'pt_title S_txt2')
+            try:
+                if u'个性域名：' in key.text:
+                    value = it.find('span', 'pt_detail')
+                    return strip_blanks(value.text) # save room
+            except Exception as e:
+                print e
+                return None
+
+        return '' # domain not defined
 
     def init_profile(self, dict):
         '''
