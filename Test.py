@@ -23,3 +23,4 @@ if __name__ == '__main__':
 
     sp = SP(user_list)
     sp.collect_user_information('5540589017')
+    sp.collect_user_information('1189837913')

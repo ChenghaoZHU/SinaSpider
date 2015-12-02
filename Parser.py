@@ -1,7 +1,7 @@
 #coding=utf-8
 __author__ = 'chzhu'
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString, Tag
 from Utility import strip_blanks, deparentheses
 import json
 import re
@@ -1582,7 +1582,9 @@ class HtmlParser(object):
         except Exception as e:
             print e
             return None, None, None, None
+    #############################################################################################################
 
+    ########################################### parsing profile #######################################################
     def parse_profile(self, html, pid, is_taobao, timestamp):
         '''
         parse profile information
@@ -1624,7 +1626,11 @@ class HtmlParser(object):
         html = self.covert_script_to_hmtl(counter)
         counter = BeautifulSoup(html)
 
-        profile = self.init_profile({})
+        profile = self.init_profile()
+
+        profile['timestamp'] = timestamp
+        profile['is_taobao'] = is_taobao
+
         profile['uid'] = pid[6:]
         profile['nickname'] = self.parse_profile_nick(frame_a)
         profile['name'] = self.parse_profile_name(frame_c)
@@ -1636,6 +1642,7 @@ class HtmlParser(object):
         profile['blood_type'] = self.parse_profile_blood_type(frame_c)
         profile['blog'] = self.parse_profile_blog(frame_c)
         profile['description'] = self.parse_profile_description(frame_c)
+
         profile['email'] = self.parse_profile_email(frame_c)
         profile['QQ'] = self.parse_profile_QQ(frame_c)
         profile['MSN'] = self.parse_profile_MSN(frame_c)
@@ -1644,13 +1651,39 @@ class HtmlParser(object):
         profile['followee_num'] = self.parse_profile_followee_num(counter)
         profile['follower_num'] = self.parse_profile_follower_num(counter)
         profile['weibo_num'] = self.parse_profile_weibo_num(counter)
+
         profile['created_at'] = self.parse_profile_created_time(frame_c)
         profile['profile_img'] = self.parse_profile_img(frame_a)
         profile['domain_id'] = pid
         profile['domain_name'] = self.parse_profile_domain(frame_c)
 
-        return profile
+        profile['level'] = self.parse_profile_level(frame_b)
+        profile['experience'] = self.parse_profile_experience(frame_b)
+        profile['credit_level'] = self.parse_profile_credit_level(frame_b)
+        profile['credit_point'] = self.parse_profile_credit_point(frame_b)
+        profile['credit_history'] = self.parse_profile_credit_history(frame_b)
 
+        profile['is_vip'] = self.parse_profile_vip(frame_b)
+        if profile['is_vip'] == '1':
+            profile['vip_level'] = self.parse_profile_vip_lvl(frame_b)
+            profile['is_yearly_paid'] = self.parse_profile_yearly_pay(frame_b)
+        else:
+            profile['is_yearly_paid'] = '0'
+
+        profile['is_verified'] = self.parse_profile_verification(frame_a)
+        if profile['is_verified'] == '1':
+            profile['verified_reason'] = self.parse_profile_verified_reason(frame_a)
+
+        profile['is_daren'] = self.parse_profile_daren(frame_b)
+        if profile['is_daren'] == '1':
+            profile['daren_type'] = self.parse_profile_daren_type(frame_b)
+            profile['daren_point'] = self.parse_profile_daren_point(frame_b)
+            profile['daren_interest'] = self.parse_profile_daren_daren_interest(frame_b)
+
+        profile['Job'].extend(self.parse_profile_jobs(frame_c))
+        profile['Education'].extend(self.parse_profile_educations(frame_c))
+
+        return profile
     def parse_profile_nick(self, frame):
         '''
 
@@ -2048,7 +2081,8 @@ class HtmlParser(object):
         for d in data:
             try:
                 if u'关注' in d.text:
-                    num = d.find('strong', 'W_f18').text
+                    # num = d.find('strong', 'W_f18').text there're strong marked with 'W_f12'
+                    num = d.find('strong').text
                     return num
             except Exception as e:
                 print e
@@ -2066,7 +2100,8 @@ class HtmlParser(object):
         for d in data:
             try:
                 if u'粉丝' in d.text:
-                    num = d.find('strong', 'W_f18').text
+                    # num = d.find('strong', 'W_f18').text refer to funciton 'parse_profile_followee_num'
+                    num = d.find('strong').text
                     return num
             except Exception as e:
                 print e
@@ -2084,7 +2119,8 @@ class HtmlParser(object):
         for d in data:
             try:
                 if u'微博' in d.text:
-                    num = d.find('strong', 'W_f18').text
+                    # num = d.find('strong', 'W_f18').text refer to function 'parse_profile_followee_num'
+                    num = d.find('strong').text
                     return num
             except Exception as e:
                 print e
@@ -2162,14 +2198,521 @@ class HtmlParser(object):
                 return None
 
         return '' # domain not defined
-
-    def init_profile(self, dict):
+    def parse_profile_level(self, frame):
         '''
 
-        :param dict: a dict reference
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        level_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'等级信息' in title.text:
+                level_information = cd
+
+        if level_information is None:
+            return None # dirty page, may not happen
+
+        try:
+            level = level_information.find('div', 'level_box S_txt2')
+            level = level.find('a', 'W_icon_level')
+            level = level.find('span')
+            level = level.text.strip('Lv.')
+            if level.isdigit():
+                return level
+            else:
+                raise Exception('Lv. information incorrect!')
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_experience(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: user experience
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        level_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'等级信息' in title.text:
+                level_information = cd
+
+        if level_information is None:
+            return None # dirty page, may not happen
+
+        try:
+            level_information = level_information.find('p', 'level_info')
+            level_information = level_information.find_all('span', 'info')
+
+            for li in level_information:
+                if u'经验值： ' in li.text and u'距离升级需' not in li.text:
+                    experience = li.find('span', 'S_txt1').text
+                    if experience.isdigit():
+                        return experience
+                    else:
+                        return '0'
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_credit_level(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        credit_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'信用信息' in title.text:
+                credit_information = cd
+
+        if credit_information is None:
+            return None # dirty page, may not happen
+
+        try:
+            credit_information = credit_information.find('div', 'trust_info S_txt2')
+            credit_information = credit_information.find_all('span', 'info')
+
+            for ci in credit_information:
+                if u'信用等级：' in ci.text:
+                    credit_level = ci.find('span', 'S_txt1')
+                    return credit_level.text
+
+            return ''
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_credit_point(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        credit_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'信用信息' in title.text:
+                credit_information = cd
+
+        if credit_information is None:
+            return None # dirty page, may not happen
+
+        try:
+            credit_information = credit_information.find('div', 'trust_info S_txt2')
+            credit_information = credit_information.find_all('span', 'info')
+
+            for ci in credit_information:
+                if u'当前信用积分：' in ci.text:
+                    credit_point = ci.find('span', 'S_txt1 point').text
+                    if credit_point.isdigit():
+                        return credit_point
+                    else:
+                        return '0'
+            return ''
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_credit_history(self, frame):
+        '''
+
+        :param frame:
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        credit_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'信用信息' in title.text:
+                credit_information = cd
+
+        if credit_information is None:
+            return None # dirty page, may not happen
+
+        history_info = credit_information.find('div', 'text_info S_line2')
+        if history_info is None:
+            return ''
+
+        history = ''
+        for info in history_info.find_all('p', 'p_info S_txt2'):
+            history += info.text + ', '
+        return history.strip(', ')
+    def parse_profile_vip(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: '1' is vip member, '0' is not
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        vip_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'会员信息' in title.text:
+                vip_information = cd
+
+        if vip_information is None:
+            return '0' # not a vip
+        else:
+            return '1'
+    def parse_profile_vip_lvl(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        vip_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'会员信息' in title.text:
+                vip_information = cd
+
+        lvl = vip_information.find('p', 'info_icon_box')
+        cls = lvl.find_all('i')
+        for c in cls:
+            try:
+                if 'W_icon' in c['class']:
+                    lvl = c['class'][-1]
+                    lvl = lvl.strip('icon_member')
+                    if lvl.isdigit():
+                        return lvl
+                    else:
+                        return '0'
+            except Exception as e:
+                print e
+                return None
+    def parse_profile_yearly_pay(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: '1' yearly paid other wise '0'
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        vip_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'会员信息' in title.text:
+                vip_information = cd
+
+        yearly_pay = vip_information.find('p', 'info_icon_box')
+        try:
+            yearly_pay = yearly_pay.find('i', 'W_icon_year_member')
+            if yearly_pay is not None:
+                return '1'
+            else:
+                return '0'
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_verification(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: '1' verified '0' not
+        '''
+        verification = frame.find('em', 'W_icon icon_pf_approve')
+        if verification is not None:
+            return '1'
+        else:
+            return '0'
+    def parse_profile_verified_reason(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        verification = frame.find('em', 'W_icon icon_pf_approve')
+        try:
+            reason = verification['title']
+            reason = reason.replace('\r', ' ').replace('\t', ' ').replace('\n', ' ')
+        except Exception as e:
+            print e
+            return None
+        return reason
+    def parse_profile_daren(self, frame):
+        '''
+        judge one whether a daren or not
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        daren_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'达人信息' in title.text:
+                daren_information = cd
+
+        if daren_information is None:
+            return '0' # not daren
+        else:
+            return '1' # daren
+    def parse_profile_daren_type(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        daren_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'达人信息' in title.text:
+                daren_information = cd
+
+        try:
+            daren_information = daren_information.find('p', 'iv_vinfo')
+            for link in daren_information.find_all('a'):
+                url = link['href']
+                if '&loc=daren' in url and '&loc=darenscore' not in url and '&loc=darenint' not in url:
+                    return link.text
+
+            return ''
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_daren_point(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        daren_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'达人信息' in title.text:
+                daren_information = cd
+
+        try:
+            daren_information = daren_information.find('p', 'iv_vinfo')
+            for link in daren_information.find_all('a'):
+                url = link['href']
+                if '&loc=darenscore' in url:
+                    score = link.text
+                    if score.isdigit():
+                        return score
+                    else:
+                        return '0'
+
+            return ''
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_daren_daren_interest(self, frame):
+        '''
+
+        :param frame: bs object
+        :return:
+        '''
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        daren_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'达人信息' in title.text:
+                daren_information = cd
+
+        try:
+            daren_information = daren_information.find('p', 'iv_vinfo')
+            interest = ''
+            for link in daren_information.find_all('a'):
+                url = link['href']
+                if '&loc=darenint' in url:
+                    interest += link.text + ', '
+
+            return interest.strip(', ')
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_jobs(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: a list of jobs
+        '''
+        jobs = [] # store all the jobs
+
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        job_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'工作信息' in title.text:
+                job_information = cd
+
+        if job_information is None:
+            return [] # no job information
+
+        job_information = job_information.find_all('span', 'pt_detail')
+        for ji in job_information:
+            job = self.parse_profile_job(ji)
+            jobs.append(job)
+
+        return jobs
+    def parse_profile_job(self, job_info):
+        '''
+
+        :param job_info: a span of class pt_detail
+        :return:
+        '''
+        job = {
+            'company':'',
+            'location':'',
+            'occupation':'',
+            'period':''
+        }
+
+        job['company'] = self.parse_profile_job_company(job_info)
+        job['location'] = self.parse_profile_job_location(job_info)
+        job['occupation'] = self.parse_profile_job_occupation(job_info)
+        job['period'] = self.parse_profile_job_period(job_info)
+
+        return job
+    def parse_profile_job_company(self, job_info):
+        '''
+
+        :param job_info:  bs object : a span of class pt_detail
+        :return:
+        '''
+        company = job_info.find('a')
+        try:
+            return company.text
+        except Exception as e:
+            print e
+            return None
+    def parse_profile_job_location(self, job_info):
+        '''
+
+        :param job_info:   bs object : a span of class pt_detail
+        :return:
+        '''
+
+
+        for c in job_info.contents:
+            if not isinstance(c, NavigableString):
+                continue
+            if u'地区：' in c:
+                location = strip_blanks(c).strip(u'地区：')
+                return location
+
+        return ''
+    def parse_profile_job_occupation(self, job_info):
+        '''
+
+        :param job_info: bs object : a span of class pt_detail
+        :return:
+        '''
+        for c in job_info.contents:
+            if not isinstance(c, NavigableString):
+                continue
+            if u'职位：' in c:
+                occupation = strip_blanks(c).strip(u'职位：')
+                return occupation
+
+        return ''
+    def parse_profile_job_period(self, job_info):
+        '''
+
+        :param job_info: bs object : a span of class pt_detail
+        :return:
+        '''
+        for c in job_info.contents:
+            if not isinstance(c, NavigableString):
+                continue
+            if '(' in c and ')' in c and u'地区：' not in c and u'职位：' not in c:
+                period = strip_blanks(c).strip('()')
+                return period
+
+        return ''
+    def parse_profile_educations(self, frame):
+        '''
+
+        :param frame: bs object
+        :return: a list of education records
+        '''
+        educations = [] # store educations
+
+        cards = frame.find_all('div', 'WB_cardwrap S_bg2')
+        edu_information = None
+        for cd in cards:
+            title = cd.find('h2', 'main_title W_fb W_f14')
+            if title is None:
+                continue
+            if u'教育信息' in title.text:
+                edu_information = cd
+
+        if edu_information is None:
+            return [] # no education information
+
+        for ei in edu_information.find_all('li'):
+            try:
+                type = ei.find('span', 'pt_title').text.strip(u'：')
+                edus = ei.find('span', 'pt_detail')
+                educations.extend(self.parse_profile_education(type, edus))
+            except Exception as e:
+                print e
+                continue
+
+        return educations
+    def parse_profile_education(self, type, edu_info):
+        '''
+        :param type: education type
+        :param edu_info: a span with class 'pt_detail'
+        :return:
+        '''
+        educations = [] # educations with the same type
+
+        education = None
+
+        for c in edu_info.contents:
+            if isinstance(c, Tag) and c.name == 'a':
+                if education is not None:
+                    educations.append(education) # store the previous record
+                education = self.init_education() # new a record
+                education['type'] = type
+                education['university'] = c.text
+            elif isinstance(c, NavigableString):
+                if u'年)' in c:
+                    education['period'] = strip_blanks(c).strip(u'()年')
+                else:
+                    c = strip_blanks(c)
+                    if c != '': # in case of empty string
+                        education['department'] = c
+        educations.append(education)
+        return educations
+    def init_profile(self):
+        '''
+
         :return: a dict defines a profile
         '''
-        dict = {
+        profile = {
             'uid':'',
             'nickname':'',
             'name':'',
@@ -2212,5 +2755,16 @@ class HtmlParser(object):
             'Education':[],
             'Job':[]
         }
+        return profile
+    def init_education(self):
+        '''
 
-        return dict
+        :return: a dict object standing for one entry of education information
+        '''
+        education = {
+            'type':'',
+            'university':'',
+            'period':'',
+            'department':''
+        }
+        return education

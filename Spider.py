@@ -42,11 +42,11 @@ class Spider(object):
         print 'Collecting information for User %s...' % (uid,)
         pid = self.get_pid(uid)
 
-        # self.get_followers(pid)
+        self.get_followers(pid)
         print 'Followers crawled.'
-        # self.get_followees(pid)
+        self.get_followees(pid)
         print 'Followees crawled.'
-        # self.get_timelines(uid)
+        self.get_timelines(uid)
         print 'Timelines crawled.'
         self.get_profile(pid)
         print 'Pofile crawled.'
