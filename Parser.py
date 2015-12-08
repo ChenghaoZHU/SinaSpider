@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from Utility import strip_blanks, deparentheses
 import json
 import re
+import Log as log
 
 class HtmlParser(object):
     def parse_pid(self, html):
@@ -26,7 +27,7 @@ class HtmlParser(object):
                     pid = str(pid) # convert unicode to string
                     return pid
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def covert_script_to_hmtl(self, script):
         """
@@ -39,7 +40,7 @@ class HtmlParser(object):
             jsn = script[8:-1]
             return json.loads(jsn)['html']
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def get_max_page_num(self, links):
         '''
@@ -232,7 +233,7 @@ class HtmlParser(object):
                     return uid.split('=')[-1]
             return None
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_follower_name(self, follower):
         """
@@ -249,7 +250,7 @@ class HtmlParser(object):
                     return name.split('=')[-1]
             return None
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_follower_gender(self, follower):
         """
@@ -266,7 +267,7 @@ class HtmlParser(object):
                     return gender.upper()
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_profile_img(self, follower):
         """
@@ -279,7 +280,7 @@ class HtmlParser(object):
             img = dt.find('img')
             return img['src']
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_follower_description(self, follower):
         """
@@ -295,7 +296,7 @@ class HtmlParser(object):
             intro = intro.find('span').text
             return intro
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_location(self, follower):
         """
@@ -308,7 +309,7 @@ class HtmlParser(object):
             addr = dd.find('div', 'info_add')
             return addr.find('span').text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_app_source(self, follower):
         """
@@ -321,7 +322,7 @@ class HtmlParser(object):
             app_src = dd.find('a', 'from')
             return app_src.text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_followee_num(self, follower):
         """
@@ -338,7 +339,7 @@ class HtmlParser(object):
                     return i.find('a').text
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_follower_num(self, follower):
         """
@@ -355,7 +356,7 @@ class HtmlParser(object):
                     return i.find('a').text
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_weibo_num(self, follower):
         """
@@ -372,7 +373,7 @@ class HtmlParser(object):
                     return i.find('a').text
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_vip_level(self, follower):
         """
@@ -390,7 +391,7 @@ class HtmlParser(object):
             level = vip['class'][-1][-1]
             return level
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_follower_verified_type(self, follower):
         """
@@ -413,7 +414,7 @@ class HtmlParser(object):
                     return '2'
             return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return '0'
     def parse_follower_daren(self, follower):
         """
@@ -430,7 +431,7 @@ class HtmlParser(object):
             else:
                 return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return '0'
     def parse_follower_vlady(self, follower):
         """
@@ -447,7 +448,7 @@ class HtmlParser(object):
             else:
                 return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return '0'
     #############################################################################################################
 
@@ -597,7 +598,7 @@ class HtmlParser(object):
                     return dt.split('=')[-1]
             return None
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_followee_name(self, followee):
         """
@@ -613,7 +614,7 @@ class HtmlParser(object):
                     return dt.split('=')[-1]
             return None
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_followee_profile_img(self, followee):
         """
@@ -626,7 +627,7 @@ class HtmlParser(object):
             img = dt.find('a').find('img')
             return img['src']
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_followee_description(self, followee):
         """
@@ -641,7 +642,7 @@ class HtmlParser(object):
                 return None
             return des.find('span').text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_gender(self, followee):
         """
@@ -657,7 +658,7 @@ class HtmlParser(object):
                     return dt.split('=')[-1].upper()
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_location(self, followee):
         """
@@ -670,7 +671,7 @@ class HtmlParser(object):
             loc = dd.find('div', 'info_add')
             return loc.find('span').text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_app_source(self, followee):
         """
@@ -683,7 +684,7 @@ class HtmlParser(object):
             app = dd.find('div', 'info_from')
             return app.find('a', 'from').text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_followee_num(self, followee):
         """
@@ -701,7 +702,7 @@ class HtmlParser(object):
                     return i.find('a').text
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_follower_num(self, followee):
         """
@@ -719,7 +720,7 @@ class HtmlParser(object):
                     return i.find('a').text
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_weibo_num(self, followee):
         """
@@ -737,7 +738,7 @@ class HtmlParser(object):
                     return i.find('a').text
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_vip_level(self, followee):
         """
@@ -754,7 +755,7 @@ class HtmlParser(object):
             level = vip.find('em')['class'][-1][-1]
             return level
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_followee_verified_type(self, followee):
         """
@@ -777,7 +778,7 @@ class HtmlParser(object):
                     return  '2'
             return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return '0'
     def parse_followee_daren(self, followee):
         """
@@ -794,7 +795,7 @@ class HtmlParser(object):
             else:
                 return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return '0'
     def parse_followee_vlady(self, followee):
         """
@@ -810,7 +811,7 @@ class HtmlParser(object):
                 return '1'
             return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return '0'
     #############################################################################################################
 
@@ -831,7 +832,7 @@ class HtmlParser(object):
                 pnum = pages[0]['href'].strip(u'&pids=Pl_Content_HomeFeed').split('=')[1]
                 return int(pnum)
             except Exception as e:
-                print e
+                log.error(e.message)
                 return None
     def parse_timelines(self, html, uid, timestamp):
         """
@@ -911,7 +912,7 @@ class HtmlParser(object):
             mid = timeline['mid']
             return mid
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_timeline_original_encrypted_mid(self, timeline):
         """
@@ -924,7 +925,7 @@ class HtmlParser(object):
             encrypted_mid = created_time['href'].split('/')[-1]
             return encrypted_mid
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_timeline_original_retweet(self, timeline):
         """
@@ -944,7 +945,7 @@ class HtmlParser(object):
                     else:
                         return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_comment(self, timeline):
         """
@@ -964,7 +965,7 @@ class HtmlParser(object):
                     else:
                         return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_favourite(self, timeline):
         """
@@ -984,7 +985,7 @@ class HtmlParser(object):
                     else:
                         return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_created_at(self, timeline):
         """
@@ -996,7 +997,7 @@ class HtmlParser(object):
         try:
             return created_time['title']
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_app_source(self, timeline):
         """
@@ -1020,7 +1021,7 @@ class HtmlParser(object):
             # text = strip_blanks(text)
             return text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_entities(self, timeline):
         """
@@ -1067,7 +1068,7 @@ class HtmlParser(object):
                 entity_str += key + ':' + entities[key].strip('; ') + ' & '
             return entity_str.strip(' & ')
         except Exception as e:
-            print e
+            log.warning(e.message)
             return ''
     def parse_timeline_original_mentions(self, timeline):
         """
@@ -1083,7 +1084,7 @@ class HtmlParser(object):
                 mentions += mention.text + ', '
             return mentions.strip(', ')
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_check_in(self, timeline):
         """
@@ -1100,7 +1101,7 @@ class HtmlParser(object):
                     return check_in
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_check_in_url(self, timeline):
         """
@@ -1117,7 +1118,7 @@ class HtmlParser(object):
                     return check_in_url
             return None
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_timeline_original_img(self, timeline):
         """
@@ -1222,7 +1223,7 @@ class HtmlParser(object):
             src_encrypted_mid = src_created_time['href'].split('/')[-1]
             return  ret_encrypted_mid, src_encrypted_mid
         except Exception as e:
-            print e
+            log.error(e.message)
             return None, None
     def parse_timeline_retweeted_uid(self, timeline):
         """
@@ -1235,7 +1236,7 @@ class HtmlParser(object):
             suid = uids[1].split('=')[1]
             return suid
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_timeline_retweeted_retweet(self, timeline):
         '''
@@ -1269,7 +1270,7 @@ class HtmlParser(object):
                     else:
                         return rretweet, '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
     def parse_timeline_retweeted_comment(self, timeline):
         '''
@@ -1302,7 +1303,7 @@ class HtmlParser(object):
                     else:
                         return rcomment, '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
     def parse_timeline_retweeted_favourite(self, timeline):
         '''
@@ -1339,7 +1340,7 @@ class HtmlParser(object):
                     else:
                         return fvrt1, '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
     def parse_timeline_retweeted_created_time(self, timeline):
         '''
@@ -1355,7 +1356,7 @@ class HtmlParser(object):
             ct2 = ct2['title']
             return ct1, ct2
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
     def parse_timeline_retweeted_app_source(self, timeline):
         '''
@@ -1371,7 +1372,7 @@ class HtmlParser(object):
             app2 = app2.text
             return app1, app2
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
     def parse_timeline_retweeted_text(self, timeline):
         '''
@@ -1387,7 +1388,7 @@ class HtmlParser(object):
             txt2 = texts[1].text
             txt1 += '//' + mention + ' ' + txt2
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
 
         return txt1, txt2
@@ -1458,7 +1459,7 @@ class HtmlParser(object):
                 else: # for unknown situations
                     ents2['others'] += media['title'] + ', ' + media['href'] + '; '
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
 
         # glue to strings
@@ -1511,7 +1512,7 @@ class HtmlParser(object):
                 img2 += ie['src'] + ', '
             img2 = img2.strip(', ')
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
 
         return img1, img2
@@ -1546,7 +1547,7 @@ class HtmlParser(object):
 
             return mnt1, mnt2
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None
     def parse_timeline_retweeted_check_in(self, timeline):
         '''
@@ -1580,7 +1581,7 @@ class HtmlParser(object):
             return check_in1, url1, check_in2, url2
 
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None, None, None, None
     #############################################################################################################
 
@@ -1695,7 +1696,7 @@ class HtmlParser(object):
             nick = nick.text
             return nick
         except Exception as e:
-            print e
+            log.error(e.message)
             return None
     def parse_profile_name(self, frame):
         '''
@@ -1723,7 +1724,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no real name found
@@ -1753,7 +1754,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no location found
@@ -1795,7 +1796,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return strip_blanks(value.text) # original text contains lots of \t, it's waste of space
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no sexual orientation
@@ -1825,7 +1826,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return strip_blanks(value.text) # original text contains lots of \t, it's waste of space
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no relationship status
@@ -1855,7 +1856,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no birthday
@@ -1885,7 +1886,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no blood type
@@ -1915,7 +1916,7 @@ class HtmlParser(object):
                     value = it.find('a')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no blog
@@ -1945,7 +1946,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no description
@@ -1975,7 +1976,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no email address
@@ -2005,7 +2006,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no QQ
@@ -2035,7 +2036,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return value.text
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # no MSN
@@ -2064,7 +2065,7 @@ class HtmlParser(object):
                 item = t.text
                 item = strip_blanks(item) # save space
             except Exception as e:
-                print e
+                log.warning(e.message)
                 continue
             tag += item + ', '
         tag = tag.strip(', ')
@@ -2085,7 +2086,7 @@ class HtmlParser(object):
                     num = d.find('strong').text
                     return num
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
         return None # problem
     def parse_profile_follower_num(self, counter):
@@ -2104,7 +2105,7 @@ class HtmlParser(object):
                     num = d.find('strong').text
                     return num
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
         return None # problem
     def parse_profile_weibo_num(self, counter):
@@ -2123,7 +2124,7 @@ class HtmlParser(object):
                     num = d.find('strong').text
                     return num
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
         return None # problem
     def parse_profile_created_time(self, frame):
@@ -2152,7 +2153,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return strip_blanks(value.text) # save storage
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # created time missing
@@ -2166,7 +2167,7 @@ class HtmlParser(object):
         try:
             return photo['src']
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_domain(self, frame):
         '''
@@ -2194,7 +2195,7 @@ class HtmlParser(object):
                     value = it.find('span', 'pt_detail')
                     return strip_blanks(value.text) # save room
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
 
         return '' # domain not defined
@@ -2226,7 +2227,7 @@ class HtmlParser(object):
             else:
                 raise Exception('Lv. information incorrect!')
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_experience(self, frame):
         '''
@@ -2258,7 +2259,7 @@ class HtmlParser(object):
                     else:
                         return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_credit_level(self, frame):
         '''
@@ -2289,7 +2290,7 @@ class HtmlParser(object):
 
             return ''
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_credit_point(self, frame):
         '''
@@ -2322,7 +2323,7 @@ class HtmlParser(object):
                         return '0'
             return ''
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_credit_history(self, frame):
         '''
@@ -2396,7 +2397,7 @@ class HtmlParser(object):
                     else:
                         return '0'
             except Exception as e:
-                print e
+                log.warning(e.message)
                 return None
     def parse_profile_yearly_pay(self, frame):
         '''
@@ -2421,7 +2422,7 @@ class HtmlParser(object):
             else:
                 return '0'
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_verification(self, frame):
         '''
@@ -2445,7 +2446,7 @@ class HtmlParser(object):
             reason = verification['title']
             reason = reason.replace('\r', ' ').replace('\t', ' ').replace('\n', ' ')
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
         return reason
     def parse_profile_daren(self, frame):
@@ -2491,7 +2492,7 @@ class HtmlParser(object):
 
             return ''
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_daren_point(self, frame):
         '''
@@ -2521,7 +2522,7 @@ class HtmlParser(object):
 
             return ''
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_daren_daren_interest(self, frame):
         '''
@@ -2548,7 +2549,7 @@ class HtmlParser(object):
 
             return interest.strip(', ')
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_jobs(self, frame):
         '''
@@ -2605,7 +2606,7 @@ class HtmlParser(object):
         try:
             return company.text
         except Exception as e:
-            print e
+            log.warning(e.message)
             return None
     def parse_profile_job_location(self, job_info):
         '''
@@ -2677,7 +2678,7 @@ class HtmlParser(object):
                 edus = ei.find('span', 'pt_detail')
                 educations.extend(self.parse_profile_education(type, edus))
             except Exception as e:
-                print e
+                log.warning(e.message)
                 continue
 
         return educations

@@ -1,2 +1,5 @@
 *.pyc
 Test.py
+Log/
+Config.py
+

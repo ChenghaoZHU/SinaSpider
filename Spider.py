@@ -7,6 +7,9 @@ from Parser import HtmlParser
 from datetime import datetime
 import urllib
 import json
+import Log as log
+import time, random
+import Config
 
 class User(object):
     def __init__(self, account, password):
@@ -85,6 +88,10 @@ class Spider(object):
             pid = self.parser.parse_pid(html)
             if pid is not None:
                 return pid
+            else:
+                log.error('Cannot get pid for uid:%s' % (uid,))
+                time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
+
 
     def get_followers(self, pid):
         fetcher = self.fetchers[self.main_fetcher]
@@ -94,6 +101,9 @@ class Spider(object):
             fer_page_num = self.get_follower_page_num(html)
             if fer_page_num is not None:
                 break
+            else:
+                log.warning('Cannot get total follower page number for pid:%s' % (pid,))
+                time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
 
         if fer_page_num == 0:
             print 'He/She does not have any followers.'
@@ -109,9 +119,11 @@ class Spider(object):
                     url = 'http://www.weibo.com/p/%s/follow?relate=fans&from=%s&wvr=6&mod=headfans&page=%d#place' % (pid, pid[:6], i)
                     print 'Getting follower page %d of %d...' % (i, fer_page_num)
                     html = open_url(fetcher, url)
-                    print 'Sleeping...'
+                    time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
                     followers = self.parser.parse_followers(html, pid, datetime.now())
                     if followers is None: # dirty html
+                        log.warning('Cannot parse follower page - pid:%s, page num:%d' % (pid, i))
+                        time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                         continue
                     self.follower_list.extend(followers)
                     break
@@ -136,6 +148,9 @@ class Spider(object):
             fee_page_num = self.get_followee_page_num(html)
             if fee_page_num is not None:
                 break
+            else:
+                log.warning('Cannot get followee page total number - pid:%s' % (pid,))
+                time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
 
         if fee_page_num == 0:
             print 'He/She does not follow any one.'
@@ -151,9 +166,11 @@ class Spider(object):
                     url = 'http://www.weibo.com/p/%s/follow?from=page_%s&wvr=6&mod=headfollow&page=%d#place' % (pid, pid[:6], i)
                     print 'Getting followee page %d of %d...' % (i, fee_page_num)
                     html = open_url(fetcher, url)
-                    print 'Sleeping...'
+                    time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
                     followees = self.parser.parse_followees(html, pid, datetime.now())
                     if followees is None: # dirty html
+                        log.warning('Cannot parse followee page correctly - pid:%s' % (pid,))
+                        time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                         continue
                     self.followee_list.extend(followees)
                     break
@@ -190,10 +207,13 @@ class Spider(object):
         timelines = []
         for pnum in xrange(2, timeline_page_num+1):
             for bnum in xrange(3):
-                    html = self.fetch_timelines_by_page_bar(uid, pnum, bnum)
-                    if html is not None:
-                        timelines = self.parser.parse_timelines(html, uid, datetime.now())
-                        self.timeline_list.extend(timelines)
+                html = self.fetch_timelines_by_page_bar(uid, pnum, bnum)
+                time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
+                if html is not None:
+                    timelines = self.parser.parse_timelines(html, uid, datetime.now())
+                    self.timeline_list.extend(timelines)
+            time.sleep(random.randint(Config.SLEEP_BETWEEN_TIMELINE_PAGES, 2*Config.SLEEP_BETWEEN_TIMELINE_PAGES))
+
     def fetch_timelines_by_page_bar(self, uid, pnum, bnum):
         """
         fetch timelines by specifying page number and bar number
@@ -235,7 +255,6 @@ class Spider(object):
             try:
                 print 'Getting timeline page %d part %d...' % (pnum, bnum+1) # bnum starts with zero up to two
                 jsn_data = open_url(self.fetchers[self.main_fetcher], url)
-                print 'Sleeping...'
 
                 data = json.loads(jsn_data)
                 html = data['data']
@@ -244,7 +263,8 @@ class Spider(object):
                 else:
                     return None
             except Exception as e:
-                print e
+                log.warning(e.message)
+                time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                 continue
     def get_timeline_page_num(self, uid):
         """
@@ -260,17 +280,23 @@ class Spider(object):
             else:
                 htmls.append(first_page_head)
 
+            time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
+
             first_page_body = self.fetch_timelines_by_page_bar(uid, 1, 1)
             if first_page_body is None:
                 return 1, htmls
             else:
                 htmls.append(first_page_body)
 
+            time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
+
             first_page_tail = self.fetch_timelines_by_page_bar(uid, 1, 2)
             if first_page_tail is None: # just one page of timelines
                 return 1, htmls
             else:
                 htmls.append(first_page_tail)
+
+            time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
 
             pnum = self.parser.parse_timeline_page_num(first_page_tail) # this page number is not accurate, so we will recount it in the next step
             if pnum is None or pnum == 1:
@@ -279,11 +305,11 @@ class Spider(object):
             while True:
                 url = 'http://www.weibo.com/%s?page=%d&pids=Pl_Content_HomeFeed' % (uid, pnum)
                 test_html = open_url(self.fetchers[self.main_fetcher], url)
+                time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
                 no_post = 'W_icon icon_warnB'
                 if no_post in test_html:
                     pnum -= 1 # fixing page number
                 else:
-                    print 'Sleeping...'
                     break
             return pnum, htmls
     def get_profile(self, pid):
@@ -299,11 +325,13 @@ class Spider(object):
         is_taobao = None
         while is_taobao is None:
             is_taobao = self.is_taobao(uid) # get taobao information in advance
+            time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
 
         profile = None
         while profile is None:
             html = open_url(fetcher, url)
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
+            time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
         self.profile_list.append(profile)
     def is_taobao(self, uid):
         '''
