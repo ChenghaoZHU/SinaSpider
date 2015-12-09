@@ -14,7 +14,8 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/SinaSpider$Test.coverage" NAME="Test Coverage Results" MODIFIED="1449556816863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SinaSpider$Test.coverage" NAME="Test Coverage Results" MODIFIED="1449655533630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SinaSpider$CompleteCrawl.coverage" NAME="CompleteCrawl Coverage Results" MODIFIED="1449657807201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -28,12 +29,14 @@
       <file leaf-file-name="Spider.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-163.44827">
-              <caret line="332" column="42" selection-start-line="332" selection-start-column="42" selection-end-line="332" selection-end-column="42" />
+            <state vertical-scroll-proportion="-9.620689">
+              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
               <folding>
                 <element signature="e#38#61#0" expanded="true" />
-                <element signature="e#2164#2252#0" expanded="false" />
-                <element signature="e#7235#7542#0" expanded="false" />
+                <element signature="e#2252#2340#0" expanded="false" />
+                <element signature="e#7323#7630#0" expanded="false" />
+                <element signature="e#20932#21150#0" expanded="false" />
+                <element signature="e#20932#21022#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -42,34 +45,24 @@
       <file leaf-file-name="Parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="17.689655">
-              <caret line="1588" column="8" selection-start-line="1588" selection-start-column="8" selection-end-line="1588" selection-end-column="8" />
+            <state vertical-scroll-proportion="-4.965517">
+              <caret line="537" column="0" selection-start-line="537" selection-start-column="0" selection-end-line="537" selection-end-column="0" />
               <folding>
                 <element signature="e#36#87#0" expanded="true" />
-                <element signature="e#1272#1670#0" expanded="false" />
-                <element signature="e#6349#7027#0" expanded="false" />
-                <element signature="e#14478#15410#0" expanded="false" />
-                <element signature="e#15472#18337#0" expanded="false" />
-                <element signature="e#18386#19064#0" expanded="false" />
-                <element signature="e#26893#27757#0" expanded="false" />
-                <element signature="e#27828#29510#0" expanded="false" />
-                <element signature="e#32660#32940#0" expanded="false" />
-                <element signature="e#37245#37570#0" expanded="false" />
-                <element signature="e#37646#40091#0" expanded="false" />
-                <element signature="e#60036#60101#1" expanded="false" />
-                <element signature="e#60991#61287#0" expanded="false" />
-                <element signature="e#79413#80164#0" expanded="false" />
-                <element signature="e#80213#80721#0" expanded="false" />
-                <element signature="e#82504#82753#0" expanded="false" />
-                <element signature="e#83249#83781#0" expanded="false" />
-                <element signature="e#86500#87207#0" expanded="false" />
-                <element signature="e#87259#87766#0" expanded="false" />
-                <element signature="e#88156#88504#0" expanded="false" />
-                <element signature="e#88567#88915#0" expanded="false" />
-                <element signature="e#88974#89362#0" expanded="false" />
-                <element signature="e#90399#91355#0" expanded="false" />
-                <element signature="e#91392#92658#0" expanded="false" />
-                <element signature="e#92697#92954#0" expanded="false" />
+                <element signature="e#1284#1682#0" expanded="false" />
+                <element signature="e#6411#7089#0" expanded="false" />
+                <element signature="e#32737#33017#0" expanded="false" />
+                <element signature="e#37322#37647#0" expanded="false" />
+                <element signature="e#37723#40168#0" expanded="false" />
+                <element signature="e#60113#60178#1" expanded="false" />
+                <element signature="e#61068#61364#0" expanded="false" />
+                <element signature="e#79490#80241#0" expanded="false" />
+                <element signature="e#80290#80798#0" expanded="false" />
+                <element signature="e#82581#82830#0" expanded="false" />
+                <element signature="e#83326#83858#0" expanded="false" />
+                <element signature="e#88233#88581#0" expanded="false" />
+                <element signature="e#88644#88992#0" expanded="false" />
+                <element signature="e#89051#89439#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -92,78 +85,26 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Dao.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dao.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="65" selection-start-line="20" selection-start-column="65" selection-end-line="20" selection-end-column="65" />
+              <folding>
+                <element signature="e#22#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Log.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Log.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="59" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="e#22#36#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/logging/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="940" column="0" selection-start-line="940" selection-start-column="0" selection-end-line="940" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.70469797">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding>
-                <element signature="e#22#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Weibo.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Weibo.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding>
-                <element signature="e#179#5188#0" expanded="false" />
-                <element signature="e#208#588#0" expanded="false" />
-                <element signature="e#625#1550#0" expanded="false" />
-                <element signature="e#1587#1786#0" expanded="false" />
-                <element signature="e#1847#2018#0" expanded="false" />
-                <element signature="e#2084#2410#0" expanded="false" />
-                <element signature="e#2459#2624#0" expanded="false" />
-                <element signature="e#2679#3249#0" expanded="false" />
-                <element signature="e#3303#3514#0" expanded="false" />
-                <element signature="e#3584#4186#0" expanded="false" />
-                <element signature="e#4246#5188#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../CLEar_Spider/Main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -172,10 +113,52 @@
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="43" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="43" />
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
                 <element signature="e#22#35#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.41684666">
+              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+              <folding>
+                <element signature="e#22#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/bs4/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="err.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/pymysql/err.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -196,13 +179,15 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Weibo.py" />
-        <option value="$PROJECT_DIR$/CompleteCrawl.py" />
         <option value="$PROJECT_DIR$/Utility.py" />
         <option value="$PROJECT_DIR$/Test.py" />
-        <option value="$PROJECT_DIR$/Parser.py" />
-        <option value="$PROJECT_DIR$/Log.py" />
+        <option value="$PROJECT_DIR$/DAO.py" />
         <option value="$PROJECT_DIR$/Config.py" />
+        <option value="$PROJECT_DIR$/Dao.py" />
+        <option value="$PROJECT_DIR$/Log.py" />
         <option value="$PROJECT_DIR$/Spider.py" />
+        <option value="$PROJECT_DIR$/CompleteCrawl.py" />
+        <option value="$PROJECT_DIR$/Parser.py" />
       </list>
     </option>
   </component>
@@ -274,7 +259,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FullScreen" value="false" />
   </component>
-  <component name="RunManager" selected="Python.Test">
+  <component name="RunManager" selected="Python.CompleteCrawl">
     <configuration default="false" name="Test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -289,6 +274,24 @@
       <module name="SinaSpider" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="CompleteCrawl" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="SinaSpider" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CompleteCrawl.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -481,12 +484,14 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Python.Test" />
+      <item index="1" class="java.lang.String" itemvalue="Python.CompleteCrawl" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Python.Test" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Python.CompleteCrawl" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Test" />
       </list>
     </recent_temporary>
   </component>
@@ -504,21 +509,21 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19349681" sideWeight="0.49442896" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19349681" sideWeight="0.49442896" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19911012" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19911012" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.70077866" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17537314" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17537314" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19349681" sideWeight="0.505571" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30589545" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4538376" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -543,12 +548,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/Spider.py</url>
-          <line>54</line>
-          <option name="timeStamp" value="128" />
+          <url>file://$PROJECT_DIR$/Test.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/CompleteCrawl.py</url>
+          <line>69</line>
+          <option name="timeStamp" value="146" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="129" />
+      <option name="time" value="147" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -559,8 +569,10 @@
           <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#2164#2252#0" expanded="false" />
-            <element signature="e#7235#7542#0" expanded="false" />
+            <element signature="e#2252#2340#0" expanded="false" />
+            <element signature="e#7323#7630#0" expanded="false" />
+            <element signature="e#20932#21150#0" expanded="false" />
+            <element signature="e#20932#21022#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -571,30 +583,20 @@
           <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
           <folding>
             <element signature="e#36#87#0" expanded="true" />
-            <element signature="e#1272#1670#0" expanded="false" />
-            <element signature="e#6349#7027#0" expanded="false" />
-            <element signature="e#14478#15410#0" expanded="false" />
-            <element signature="e#15472#18337#0" expanded="false" />
-            <element signature="e#18386#19064#0" expanded="false" />
-            <element signature="e#26893#27757#0" expanded="false" />
-            <element signature="e#27828#29510#0" expanded="false" />
-            <element signature="e#32660#32940#0" expanded="false" />
-            <element signature="e#37245#37570#0" expanded="false" />
-            <element signature="e#37646#40091#0" expanded="false" />
-            <element signature="e#60036#60101#1" expanded="false" />
-            <element signature="e#60991#61287#0" expanded="false" />
-            <element signature="e#79413#80164#0" expanded="false" />
-            <element signature="e#80213#80721#0" expanded="false" />
-            <element signature="e#82504#82753#0" expanded="false" />
-            <element signature="e#83249#83781#0" expanded="false" />
-            <element signature="e#86500#87207#0" expanded="false" />
-            <element signature="e#87259#87766#0" expanded="false" />
-            <element signature="e#88156#88504#0" expanded="false" />
-            <element signature="e#88567#88915#0" expanded="false" />
-            <element signature="e#88974#89362#0" expanded="false" />
-            <element signature="e#90399#91355#0" expanded="false" />
-            <element signature="e#91392#92658#0" expanded="false" />
-            <element signature="e#92697#92954#0" expanded="false" />
+            <element signature="e#1284#1682#0" expanded="false" />
+            <element signature="e#6411#7089#0" expanded="false" />
+            <element signature="e#32737#33017#0" expanded="false" />
+            <element signature="e#37322#37647#0" expanded="false" />
+            <element signature="e#37723#40168#0" expanded="false" />
+            <element signature="e#60113#60178#1" expanded="false" />
+            <element signature="e#61068#61364#0" expanded="false" />
+            <element signature="e#79490#80241#0" expanded="false" />
+            <element signature="e#80290#80798#0" expanded="false" />
+            <element signature="e#82581#82830#0" expanded="false" />
+            <element signature="e#83326#83858#0" expanded="false" />
+            <element signature="e#88233#88581#0" expanded="false" />
+            <element signature="e#88644#88992#0" expanded="false" />
+            <element signature="e#89051#89439#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -662,8 +664,10 @@
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#2164#2252#0" expanded="false" />
-            <element signature="e#7235#7542#0" expanded="false" />
+            <element signature="e#2252#2340#0" expanded="false" />
+            <element signature="e#7323#7630#0" expanded="false" />
+            <element signature="e#20932#21150#0" expanded="false" />
+            <element signature="e#20932#21022#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -715,14 +719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/bs4/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7494199">
-          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/bs4/element.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21407185">
@@ -755,87 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="43" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="43" />
-          <folding>
-            <element signature="e#22#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Spider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-163.44827">
-          <caret line="332" column="42" selection-start-line="332" selection-start-column="42" selection-end-line="332" selection-end-column="42" />
-          <folding>
-            <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#2164#2252#0" expanded="false" />
-            <element signature="e#7235#7542#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="17.689655">
-          <caret line="1588" column="8" selection-start-line="1588" selection-start-column="8" selection-end-line="1588" selection-end-column="8" />
-          <folding>
-            <element signature="e#36#87#0" expanded="true" />
-            <element signature="e#1272#1670#0" expanded="false" />
-            <element signature="e#6349#7027#0" expanded="false" />
-            <element signature="e#14478#15410#0" expanded="false" />
-            <element signature="e#15472#18337#0" expanded="false" />
-            <element signature="e#18386#19064#0" expanded="false" />
-            <element signature="e#26893#27757#0" expanded="false" />
-            <element signature="e#27828#29510#0" expanded="false" />
-            <element signature="e#32660#32940#0" expanded="false" />
-            <element signature="e#37245#37570#0" expanded="false" />
-            <element signature="e#37646#40091#0" expanded="false" />
-            <element signature="e#60036#60101#1" expanded="false" />
-            <element signature="e#60991#61287#0" expanded="false" />
-            <element signature="e#79413#80164#0" expanded="false" />
-            <element signature="e#80213#80721#0" expanded="false" />
-            <element signature="e#82504#82753#0" expanded="false" />
-            <element signature="e#83249#83781#0" expanded="false" />
-            <element signature="e#86500#87207#0" expanded="false" />
-            <element signature="e#87259#87766#0" expanded="false" />
-            <element signature="e#88156#88504#0" expanded="false" />
-            <element signature="e#88567#88915#0" expanded="false" />
-            <element signature="e#88974#89362#0" expanded="false" />
-            <element signature="e#90399#91355#0" expanded="false" />
-            <element signature="e#91392#92658#0" expanded="false" />
-            <element signature="e#92697#92954#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
-          <folding>
-            <element signature="e#63#434#0" expanded="false" />
-            <element signature="e#460#754#0" expanded="false" />
-            <element signature="e#900#913#0" expanded="false" />
-            <element signature="e#953#1110#0" expanded="false" />
-            <element signature="e#1142#1260#0" expanded="false" />
-            <element signature="e#1292#1397#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="59" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
-          <folding>
-            <element signature="e#22#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/logging/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -864,18 +779,152 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/sqlalchemy/dialects/mysql/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33221477">
+          <caret line="2916" column="0" selection-start-line="2916" selection-start-column="0" selection-end-line="2916" selection-end-column="0" />
+          <folding>
+            <marker date="1431046214000" expanded="true" signature="-1:-1" placeholder="ALTER TABLE missing_value..." />
+            <marker date="1431046214000" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..missing_value..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/sqlalchemy/util/langhelpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33221477">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/sqlalchemy/sql/schema.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33221477">
+          <caret line="415" column="0" selection-start-line="415" selection-start-column="0" selection-end-line="415" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dao.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="65" selection-start-line="20" selection-start-column="65" selection-end-line="20" selection-end-column="65" />
+          <folding>
+            <element signature="e#22#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <folding>
+            <element signature="e#22#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/sqlalchemy/orm/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17862166">
+          <caret line="716" column="0" selection-start-line="716" selection-start-column="0" selection-end-line="716" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/bs4/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/pymysql/err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
+          <folding>
+            <element signature="e#63#434#0" expanded="false" />
+            <element signature="e#460#754#0" expanded="false" />
+            <element signature="e#900#913#0" expanded="false" />
+            <element signature="e#953#1110#0" expanded="false" />
+            <element signature="e#1142#1260#0" expanded="false" />
+            <element signature="e#1292#1397#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="e#22#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.620689">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding>
+            <element signature="e#38#61#0" expanded="true" />
+            <element signature="e#2252#2340#0" expanded="false" />
+            <element signature="e#7323#7630#0" expanded="false" />
+            <element signature="e#20932#21150#0" expanded="false" />
+            <element signature="e#20932#21022#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.965517">
+          <caret line="537" column="0" selection-start-line="537" selection-start-column="0" selection-end-line="537" selection-end-column="0" />
+          <folding>
+            <element signature="e#36#87#0" expanded="true" />
+            <element signature="e#1284#1682#0" expanded="false" />
+            <element signature="e#6411#7089#0" expanded="false" />
+            <element signature="e#32737#33017#0" expanded="false" />
+            <element signature="e#37322#37647#0" expanded="false" />
+            <element signature="e#37723#40168#0" expanded="false" />
+            <element signature="e#60113#60178#1" expanded="false" />
+            <element signature="e#61068#61364#0" expanded="false" />
+            <element signature="e#79490#80241#0" expanded="false" />
+            <element signature="e#80290#80798#0" expanded="false" />
+            <element signature="e#82581#82830#0" expanded="false" />
+            <element signature="e#83326#83858#0" expanded="false" />
+            <element signature="e#88233#88581#0" expanded="false" />
+            <element signature="e#88644#88992#0" expanded="false" />
+            <element signature="e#89051#89439#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70469797">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.41684666">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding>
             <element signature="e#22#55#0" expanded="true" />
           </folding>

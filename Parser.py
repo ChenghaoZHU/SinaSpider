@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from Utility import strip_blanks, deparentheses
 import json
 import re
-import Log as log
+from Log import logger as log
 
 class HtmlParser(object):
     def parse_pid(self, html):
@@ -67,6 +67,9 @@ class HtmlParser(object):
         :param html:
         :return: '1' is taobao, '0' is not
         '''
+        if html is None:
+            return None
+
         keyword = 'W_icon icon_taobao'
         soup = BeautifulSoup(html)
         scripts = soup.find_all('script')
@@ -698,7 +701,7 @@ class HtmlParser(object):
             if info is None:
                 return None # recommended followees are without statistics information
             for i in info.find_all('span'):
-                if u'关注' in i:
+                if u'关注' in i.text:
                     return i.find('a').text
             return None
         except Exception as e:
@@ -716,7 +719,7 @@ class HtmlParser(object):
             if info is None:
                 return None # recommended followees are without statistics information
             for i in info.find_all('span'):
-                if u'粉丝' in i:
+                if u'粉丝' in i.text:
                     return i.find('a').text
             return None
         except Exception as e:
@@ -734,7 +737,7 @@ class HtmlParser(object):
             if info is None:
                 return None # recommended followees are without statistics information
             for i in info.find_all('span'):
-                if u'微博' in i:
+                if u'微博' in i.text:
                     return i.find('a').text
             return None
         except Exception as e:
