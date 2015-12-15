@@ -6,6 +6,16 @@ from Config import TABLES
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Table
+
+class Paras(object):
+    '''
+    this class is equal to Parameter in this file, but it's designed for disconnection of db session
+    '''
+    def __init__(self, i, s, gsid):
+        self.i = i
+        self.s = s
+        self.gsid = gsid
+
 Base = declarative_base()
 
 ENGINE_INFO = 'mysql+pymysql://' + Config.DB_USER + ':' + Config.DB_PASSWD + '@' + Config.DB_HOST + '/' + Config.DB_DATABASE + '?charset=' + Config.DB_CHARSET
@@ -72,3 +82,27 @@ class Account(Base):
     def __init__(self, l):
         for key, value in l.items():
             setattr(self, key, value)
+
+class Parameter(Base):
+    __table__ = Table(TABLES['parameter'], Base.metadata, autoload=True, autoload_with=ENGINE)
+
+    def __init__(self, l):
+        for key, value in l.items():
+            setattr(self, key, value)
+
+    @classmethod
+    def get_all(cls):
+        db = Database()
+        db.connect()
+
+        cursor = db.session.query(cls).filter(cls.is_available == '1').all()
+        result = []
+        for cs in cursor:
+            cs.is_available = '0'
+            i = cs.i
+            s = cs.s
+            gsid = cs.gsid
+            result.append(Paras(i, s, gsid))
+
+        db.close()
+        return result
