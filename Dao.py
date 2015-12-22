@@ -76,6 +76,22 @@ class Task(Base):
     def __init__(self, l):
         for key, value in l.items():
             setattr(self, key, value)
+
+    @classmethod
+    def get_all(cls):
+        db = Database()
+        db.connect()
+
+        cursor = db.session.query(cls).filter(cls.is_available == '1', cls.is_deleted == '0').all()
+        result = []
+        for cs in cursor:
+            cs.is_available = '0'
+            result.append(cs.uid)
+
+        db.close()
+        return result
+
+
 class Account(Base):
     __table__ = Table(TABLES['account'], Base.metadata, autoload=True, autoload_with=ENGINE)
 

@@ -48,6 +48,10 @@ class Spider(object):
     def collect_user_information(self, uid):
         print 'Collecting information for User %s...' % (uid,)
         pid = self.get_pid(uid)
+        if pid == '':
+            print 'User does not exist!'
+            self.set_user_deleted_by_uid(uid)
+            return 404
 
         self.get_followers(pid)
         print 'Followers crawled.'
@@ -57,6 +61,16 @@ class Spider(object):
         print 'Timelines crawled.'
         self.get_profile(pid)
         print 'Pofile crawled.'
+
+    def collect_user_profiles_only(self, uid):
+        print 'Collecting profile for User %s...' % (uid,)
+        pid = self.get_pid(uid)
+        if pid == '':
+            print 'User does not exist!'
+            self.set_user_deleted_by_uid(uid)
+            return 404
+        self.get_profile(pid)
+        print 'Profile craled.'
 
     def get_fetchers_by_user(self):
         """
@@ -387,6 +401,28 @@ class Spider(object):
 
         self.database.close()
 
+    def save_only_profile(self):
+
+        self.transformation()
+        self.clear_null_data() # this function must be called after self.transformation
+
+        self.database.connect()
+
+        for pf in self.profile_list:
+            for jb in pf['Job']:
+                self.database.session.merge(Dao.Job(jb))
+            for edu in pf['Education']:
+                self.database.session.merge(Dao.Education(edu))
+
+            del pf['Job']
+            del pf['Education']
+
+            self.database.session.merge(Dao.User(pf))
+
+        self.clear_buffer()
+
+
+        self.database.close()
 
 
     def transformation(self):
@@ -602,3 +638,11 @@ class Spider(object):
 
 
 
+    def set_user_deleted_by_uid(self, uid):
+        db = Database()
+        db.connect()
+
+        cursor = db.session.query(Dao.Task).filter(Dao.Task.uid == uid).one()
+        cursor.is_deleted = '1'
+
+        db.close()
