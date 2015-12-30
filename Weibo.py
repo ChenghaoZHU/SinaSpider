@@ -40,7 +40,10 @@ class Weibo(object):
                 response = opener.open(verification_url).read()
                 captcha = StringIO.StringIO(response)
                 img = Image.open(captcha)
-                img.show()
+                # img.show() # for windows
+                img.convert('RGB').save('captcha.jpg')
+                from subprocess import call
+                call(['cacaview', 'SinaSpider/captcha.jpg']) # for linux, it's noting that you should install caca-utils at first
 
                 captcha = raw_input('Input the verification code:')
 
