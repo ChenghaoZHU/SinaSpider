@@ -5,6 +5,8 @@ from Utility import open_url
 import cookielib, urllib2, urllib
 import re, json
 import base64, rsa, binascii
+import random
+import StringIO, Image
 
 class Weibo(object):
     def __init__(self):
@@ -34,7 +36,26 @@ class Weibo(object):
                 return None
             else: # need captcha
                 print 'Captcha Needed!'
-                return None
+                verification_url = 'http://login.sina.com.cn/cgi/pin.php?r=' + str(random.randint(1, 1000000)) + '&s=0&p=' + server_data['pcid']
+                response = opener.open(verification_url).read()
+                captcha = StringIO.StringIO(response)
+                img = Image.open(captcha)
+                img.show()
+
+                captcha = raw_input('Input the verification code:')
+
+                post_data['door'] = captcha
+                post_data['pagerefer'] = ''
+                post_data['pcid'] = server_data['pcid']
+                post_data['sp'] = self.encrypt_user_passwd(user.pswd, server_data)
+
+                redirect_response = self.get_redirect_response(post_data, opener)
+                if 'retcode=0' in redirect_response:
+                    print 'Success!'
+                elif 'retcode=2093' in redirect_response:
+                    print 'Login fails, please try again.'
+                elif 'retcode=2070' in redirect_response:
+                    print 'Invalid verification code! Please try again.'
 
         try:
             redirect_url = self.get_redirect_url(redirect_response)

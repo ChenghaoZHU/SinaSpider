@@ -70,7 +70,7 @@ class Spider(object):
             self.set_user_deleted_by_uid(uid)
             return 404
         self.get_profile(pid)
-        print 'Profile craled.'
+        print 'Profile crawled.'
 
     def get_fetchers_by_user(self):
         """

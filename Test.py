@@ -6,7 +6,7 @@ from Dao import Task
 
 if __name__ == '__main__':
 
-    user_1 = Spider.User('helloh622@gmail.com', 'hello1234567890')
+    user_1 = Spider.User('shimiaohuirv1203@163.com', 'a123456')
     user_2 = Spider.User('1352875156@qq.com', 'w1127401044')
     user_list = [user_1, user_2]
 
