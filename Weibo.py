@@ -43,7 +43,7 @@ class Weibo(object):
                 # img.show() # for windows
                 img.convert('RGB').save('captcha.jpg')
                 from subprocess import call
-                call(['cacaview', 'SinaSpider/captcha.jpg']) # for linux, it's noting that you should install caca-utils at first
+                call(['cacaview', 'captcha.jpg']) # for linux, it's noting that you should install caca-utils at first
 
                 captcha = raw_input('Input the verification code:')
 
