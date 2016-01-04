@@ -21,5 +21,5 @@ if __name__ == '__main__':
 
     text = '哈哈哈'
     print text
-    text = text.replace('', '')
+    text1 = text.replace('', '')
     print text

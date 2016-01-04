@@ -384,7 +384,7 @@ class Spider(object):
         for fer in self.follower_list:
             self.database.session.merge(Dao.Follower(fer))
         for tl in self.timeline_list:
-            tl['text'].replace('', '') #  is /001, so it's necessary to eliminate it
+            tl['text'] = tl['text'].replace('', '') #  is /001, so it's necessary to eliminate it
             self.database.session.merge(Dao.Timeline(tl))
         for pf in self.profile_list:
             for jb in pf['Job']:
