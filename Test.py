@@ -19,7 +19,4 @@ if __name__ == '__main__':
     #     sp.collect_user_profiles_only(uid)
     #     sp.save_only_profile()
 
-    text = '哈哈哈'
-    print text
-    text1 = text.replace('', '')
-    print text
+    pass
