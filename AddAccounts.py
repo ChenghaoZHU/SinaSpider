@@ -18,7 +18,7 @@ if __name__ == '__main__':
             if line.strip('\r\n\t') == '':
                 continue
             act = line.split('----')[0]
-            pwd = line.split('----')[1]
+            pwd = line.split('----')[1].strip('\n')
             account = Account({'account':act, 'passwd':pwd})
             account_list.append(account)
 
