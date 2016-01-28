@@ -7,6 +7,7 @@ import re, json
 import base64, rsa, binascii
 import random
 import StringIO, Image
+from Config import OS
 
 class Weibo(object):
     def __init__(self):
@@ -40,10 +41,12 @@ class Weibo(object):
                 response = opener.open(verification_url).read()
                 captcha = StringIO.StringIO(response)
                 img = Image.open(captcha)
-                # img.show() # for windows
-                img.convert('RGB').save('captcha.jpg')
-                from subprocess import call
-                call(['cacaview', 'captcha.jpg']) # for linux, it's noting that you should install caca-utils at first
+                if OS == 1:
+                    img.show() # for windows
+                else:
+                    img.convert('RGB').save('captcha.jpg')
+                    from subprocess import call
+                    call(['cacaview', 'captcha.jpg']) # for linux, it's noting that you should install caca-utils at first
 
                 captcha = raw_input('Input the verification code:')
 
