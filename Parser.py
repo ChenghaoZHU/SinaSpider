@@ -8,6 +8,17 @@ import re
 from Log import logger as log
 
 class HtmlParser(object):
+
+    def is_frozen(self, html):
+        soup = BeautifulSoup(html)
+        try:
+            if u'微博帐号解冻' in soup.find('title').text:
+                return True
+            else:
+                return False
+        except:
+            return False
+
     def parse_pid(self, html):
         """
 
@@ -29,6 +40,25 @@ class HtmlParser(object):
         except Exception as e:
             log.error(e.message)
             return None
+
+    def parse_uid(self, html):
+        soup = BeautifulSoup(html)
+        script = soup.find('script', text=re.compile("\$CONFIG\[\'page_id\'\]"))
+
+        try:
+            script = script.text
+            attributes = script.split(';')
+            uid = ''
+            for attr in attributes:
+                if 'uid' in attr:
+                    uid = attr.split('=')[1][1:-1]
+                    uid = str(uid) # convert unicode to string
+                    return uid
+            return -1 # no uid
+        except Exception as e:
+            log.error(e.message)
+            return None
+
     def covert_script_to_hmtl(self, script):
         """
 
@@ -67,6 +97,10 @@ class HtmlParser(object):
         :param html:
         :return: '1' is taobao, '0' is not
         '''
+        uid = self.parse_uid(html)
+        if uid == -1:
+            return -1 # account is banned
+
         if html is None:
             return None
 
@@ -170,6 +204,8 @@ class HtmlParser(object):
         :param html:
         :return: follower page number if exception return None
         """
+
+
         soup = BeautifulSoup(html)
 
         scripts = soup.find_all('script')
@@ -462,6 +498,7 @@ class HtmlParser(object):
         :param html:
         :return: followee page number, None if dirty html
         """
+
         soup = BeautifulSoup(html)
 
         scripts = soup.find_all('script')

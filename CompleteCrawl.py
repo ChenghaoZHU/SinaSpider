@@ -14,7 +14,7 @@ def initialization():
     user_list = get_accounts(ACCOUNT_NUM)
     spider = Spider(user_list)
 
-    return spider, uid_list
+    return spider, uid_list, user_list
 
 def get_tasks(limit):
     '''
@@ -54,24 +54,49 @@ def get_accounts(limit):
     db.close()
     return user_list
 
+def reset(user_list, uid_list, crawled_list):
+    '''
+
+    :param user_list: accounts
+    :param uid_list:  tasks
+    :param crawled_list: completed tasks
+    :return:
+    '''
+    Account.reset(user_list)
+    uncrawled_list = []
+    for uid in uid_list:
+        if uid not in crawled_list:
+            uncrawled_list.append(uid)
+    Task.reset(uncrawled_list)
+
 
 
 if __name__ == '__main__':
 
     print 'Initializing...'
-    spider, uid_list = initialization()
+    crawled_list = []
+    spider, uid_list, user_list = initialization()
 
     start_time = datetime.now()
-    while True:
-        for uid in uid_list:
-            spider.collect_user_information(uid)
-            spider.save()
-            end_time = datetime.now()
-            duration = end_time - start_time
-            if duration.seconds > ACCOUNT_CHANGE_TIME:
-                spider.main_fetcher = loop_increase(spider.main_fetcher, len(spider.fetchers))
-                start_time = datetime.now()
+    try:
+        while True:
+            for uid in uid_list:
+                spider.collect_user_information(uid)
+                spider.save()
+                crawled_list.append(uid)
+                end_time = datetime.now()
+                duration = end_time - start_time
+                if duration.seconds > ACCOUNT_CHANGE_TIME:
+                    spider.main_fetcher = loop_increase(spider.main_fetcher, len(spider.fetchers))
+                    start_time = datetime.now()
 
-        print 'Complete a batch of tasks!'
-        print 'Getting new tasks...'
-        uid_list = get_tasks(TASK_NUM)
+            print 'Complete a batch of tasks!'
+            print 'Getting new tasks...'
+            uid_list = get_tasks(TASK_NUM)
+            if len(uid_list) == 0:
+                print 'No tasks to proceed!'
+                exit(-1)
+    except Exception as e:
+        print e.message
+    finally:
+        reset(user_list, uid_list, crawled_list) # reset

@@ -45,6 +45,17 @@ class Spider(object):
         self.timeline_list = [] # store timelines
         self.profile_list = [] # store profiles
 
+    def ban_account(self):
+
+        account = self.users[self.main_fetcher].acct
+        Dao.Account.ban(account)
+
+        self.users.pop(self.main_fetcher)
+        self.fetchers.pop(self.main_fetcher)
+        if self.main_fetcher == len(self.fetchers):
+            self.main_fetcher = 0
+
+
     def collect_user_information(self, uid):
         print 'Collecting information for User %s...' % (uid,)
         pid = self.get_pid(uid)
@@ -112,10 +123,17 @@ class Spider(object):
 
 
     def get_followers(self, pid):
-        fetcher = self.fetchers[self.main_fetcher]
+
         url = 'http://www.weibo.com/p/' + pid + '/follow?relate=fans&from=' + pid[:6] + '&wvr=6&mod=headfans#place'
         while True:
+            fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
+            uid = self.parser.parse_uid(html)
+            if uid == -1:
+                self.ban_account()
+                if len(self.fetchers) == 0:
+                    raise Exception('No valid account!')
+                continue
             fer_page_num = self.get_follower_page_num(html)
             if fer_page_num is not None:
                 break
@@ -158,11 +176,18 @@ class Spider(object):
             fer_pnum = 5
         return fer_pnum
     def get_followees(self, pid):
-        fetcher = self.fetchers[self.main_fetcher]
+
         url = 'http://www.weibo.com/p/' + pid + '/follow?from=page_' + pid[:6] + '&wvr=6&mod=headfollow#place'
 
         while True:
+            fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
+            uid = self.parser.parse_uid(html)
+            if uid == -1:
+                self.ban_account()
+                if len(self.fetchers) == 0:
+                    raise Exception('No valid account!')
+                continue
             fee_page_num = self.get_followee_page_num(html)
             if fee_page_num is not None:
                 break
@@ -275,6 +300,11 @@ class Spider(object):
             try:
                 print 'Getting timeline page %d part %d...' % (pnum, bnum+1) # bnum starts with zero up to two
                 jsn_data = open_url(self.fetchers[self.main_fetcher], url)
+                if self.parser.is_frozen(jsn_data):
+                    self.ban_account()
+                    if len(self.fetchers) == 0:
+                        raise Exception('No valid account!')
+                    continue
 
                 data = json.loads(jsn_data)
                 html = data['data']
@@ -283,6 +313,8 @@ class Spider(object):
                 else:
                     return None
             except Exception as e:
+                if 'No valid account!' in e.message:
+                    raise e
                 log.warning(e.message)
                 time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                 continue
@@ -338,19 +370,30 @@ class Spider(object):
         :param pid: page id
         :return:
         '''
-        fetcher = self.fetchers[self.main_fetcher]
+
         url = 'http://www.weibo.com/p/%s/info?mod=pedit_more' % (pid,)
 
         uid = pid[6:]
         is_taobao = None
         while is_taobao is None:
             is_taobao = self.is_taobao(uid) # get taobao information in advance
+            if is_taobao == -1:
+                self.ban_account()
+                if len(self.fetchers) == 0:
+                    raise Exception('No valid account!')
+                is_taobao = None
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
 
         profile = None
         print 'Getting profile page...'
         while profile is None:
+            fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
+            if self.parser.parse_uid(html) == -1:
+                self.ban_account()
+                if len(self.fetchers) == 0:
+                    raise Exception('No valid account!')
+                continue
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
         self.profile_list.append(profile)

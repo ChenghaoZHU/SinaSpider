@@ -3,7 +3,7 @@ __author__ = 'chzhu'
 
 import Spider
 from Spider import Spider as SP
-from Dao import Task
+from Dao import Task, Account
 
 if __name__ == '__main__':
 
@@ -19,4 +19,6 @@ if __name__ == '__main__':
     #     sp.collect_user_profiles_only(uid)
     #     sp.save_only_profile()
 
+    acc_list = ['1113904572', '1933039147']
+    Task.reset(acc_list)
     pass

@@ -91,6 +91,18 @@ class Task(Base):
         db.close()
         return result
 
+    @classmethod
+    def reset(cls, uids):
+        db = Database()
+        db.connect()
+
+        for uid in uids:
+            cursor = db.session.query(cls).filter(cls.uid == uid).one()
+            cursor.is_available = '1'
+
+        db.close()
+
+
 
 class Account(Base):
     __table__ = Table(TABLES['account'], Base.metadata, autoload=True, autoload_with=ENGINE)
@@ -98,6 +110,28 @@ class Account(Base):
     def __init__(self, l):
         for key, value in l.items():
             setattr(self, key, value)
+
+    @classmethod
+    def reset(cls, accounts):
+        db = Database()
+        db.connect()
+
+        for acc in accounts:
+            cursor = db.session.query(cls).filter(cls.account == acc).one()
+            cursor.is_available = '1'
+
+        db.close()
+
+    @classmethod
+    def ban(cls, account):
+        db = Database()
+        db.connect()
+
+        cursor = db.session.query(cls).filter(cls.account == account).one()
+        cursor.is_deleted = '1'
+
+        db.close()
+
 
 class Parameter(Base):
     __table__ = Table(TABLES['parameter'], Base.metadata, autoload=True, autoload_with=ENGINE)

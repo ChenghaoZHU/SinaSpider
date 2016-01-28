@@ -41,7 +41,7 @@ class Weibo(object):
                 response = opener.open(verification_url).read()
                 captcha = StringIO.StringIO(response)
                 img = Image.open(captcha)
-                if OS == 1:
+                if OS == 0:
                     img.show() # for windows
                 else:
                     img.convert('RGB').save('captcha.jpg')
