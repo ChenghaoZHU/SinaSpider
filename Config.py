@@ -26,7 +26,7 @@ DB_HOST = '127.0.0.1'
 DB_DATABASE = 'sina_weibo'
 DB_CHARSET = 'utf8mb4'
 
-ACCOUNT_NUM = 3
+ACCOUNT_NUM = 1
 TASK_NUM = 100
 
 OS = 0 # 0 is for Windows, 1 is for Linux

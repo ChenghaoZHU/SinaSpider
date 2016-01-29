@@ -117,7 +117,7 @@ class Account(Base):
         db.connect()
 
         for acc in accounts:
-            cursor = db.session.query(cls).filter(cls.account == acc).one()
+            cursor = db.session.query(cls).filter(cls.account == acc.acct).one()
             cursor.is_available = '1'
 
         db.close()
