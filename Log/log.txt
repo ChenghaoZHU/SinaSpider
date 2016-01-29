@@ -3,3 +3,7 @@
 2016-01-28 14:17:52,068 - Spider.py:286 - No JSON object could be decoded
 2016-01-28 15:03:53,487 - Spider.py:294 - No JSON object could be decoded
 2016-01-28 15:17:04,282 - Spider.py:294 - 'NoneType' object has no attribute 'text'
+2016-01-29 10:48:31,305 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 10:48:41,948 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 11:02:01,056 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 11:02:12,875 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
