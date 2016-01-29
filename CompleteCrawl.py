@@ -6,6 +6,7 @@ from datetime import datetime
 from Dao import Database, Task, Account
 from Spider import User
 from Config import ACCOUNT_NUM, TASK_NUM, ACCOUNT_CHANGE_TIME
+from Utility import emphasis_print
 
 def initialization():
     # get a list of user ids as tasks
@@ -81,6 +82,7 @@ if __name__ == '__main__':
     try:
         while True:
             for uid in uid_list:
+                emphasis_print('Now %d of %d accounts are working!' % (spider.main_fetcher+1, len(spider.fetchers)))
                 spider.collect_user_information(uid)
                 spider.save()
                 crawled_list.append(uid)
@@ -89,6 +91,7 @@ if __name__ == '__main__':
                 if duration.seconds > ACCOUNT_CHANGE_TIME:
                     spider.main_fetcher = loop_increase(spider.main_fetcher, len(spider.fetchers))
                     start_time = datetime.now()
+                    emphasis_print('Account changed!!!')
 
             print 'Complete a batch of tasks!'
             print 'Getting new tasks...'

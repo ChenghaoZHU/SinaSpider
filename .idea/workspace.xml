@@ -17,7 +17,7 @@
     <SUITE FILE_PATH="coverage/SinaSpider$CrawlTimelineByAPI.coverage" NAME="CrawlTimelineByAPI Coverage Results" MODIFIED="1450773169341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SinaSpider$AddAccounts.coverage" NAME="AddAccounts Coverage Results" MODIFIED="1453944537400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SinaSpider$Test.coverage" NAME="Test Coverage Results" MODIFIED="1453960053746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SinaSpider$CompleteCrawl.coverage" NAME="CompleteCrawl Coverage Results" MODIFIED="1454036183110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SinaSpider$CompleteCrawl.coverage" NAME="CompleteCrawl Coverage Results" MODIFIED="1454046636180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -28,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Spider.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Spider.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3616601">
-              <caret line="433" column="31" selection-start-line="433" selection-start-column="31" selection-end-line="433" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="366" column="8" selection-start-line="366" selection-start-column="8" selection-end-line="366" selection-end-column="8" />
               <folding>
                 <element signature="e#3008#3096#0" expanded="false" />
                 <element signature="e#23776#23994#0" expanded="false" />
@@ -64,14 +64,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.47035572">
+              <caret line="84" column="92" selection-start-line="84" selection-start-column="92" selection-end-line="84" selection-end-column="92" />
               <folding>
-                <element signature="e#265#493#0" expanded="false" />
-                <element signature="e#521#924#0" expanded="false" />
+                <element signature="e#22#55#0" expanded="true" />
+                <element signature="e#300#528#0" expanded="false" />
+                <element signature="e#556#959#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -163,9 +164,9 @@
         <option value="$PROJECT_DIR$/Parser.py" />
         <option value="$PROJECT_DIR$/AddAccounts.py" />
         <option value="$PROJECT_DIR$/Config.py" />
-        <option value="$PROJECT_DIR$/CompleteCrawl.py" />
         <option value="$PROJECT_DIR$/Dao.py" />
         <option value="$PROJECT_DIR$/Spider.py" />
+        <option value="$PROJECT_DIR$/CompleteCrawl.py" />
       </list>
     </option>
   </component>
@@ -543,7 +544,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21055438" sideWeight="0.49442896" order="0" side_tool="false" content_ui="combo" />
@@ -596,10 +597,39 @@
           <line>21</line>
           <option name="timeStamp" value="168" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Spider.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Spider.py</url>
+          <line>186</line>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Spider.py</url>
+          <line>303</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Spider.py</url>
+          <line>392</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Spider.py</url>
+          <line>380</line>
+          <option name="timeStamp" value="193" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="186" />
+      <option name="time" value="194" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="fee['fee_uid']" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Parser.py">
@@ -901,14 +931,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda/Lib/site-packages/pymysql/connections.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32806325">
@@ -920,16 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32806325">
           <caret line="1009" column="0" selection-start-line="1009" selection-start-column="0" selection-end-line="1009" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="63" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="63" />
-          <folding>
-            <element signature="e#45#58#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -981,25 +993,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
+    <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
+          <caret line="9" column="63" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="63" />
           <folding>
-            <element signature="e#265#493#0" expanded="false" />
-            <element signature="e#521#924#0" expanded="false" />
+            <element signature="e#45#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3616601">
-          <caret line="433" column="31" selection-start-line="433" selection-start-column="31" selection-end-line="433" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="366" column="8" selection-start-line="366" selection-start-column="8" selection-end-line="366" selection-end-column="8" />
           <folding>
             <element signature="e#3008#3096#0" expanded="false" />
             <element signature="e#23776#23994#0" expanded="false" />
             <element signature="e#23776#23866#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47035572">
+          <caret line="84" column="92" selection-start-line="84" selection-start-column="92" selection-end-line="84" selection-end-column="92" />
+          <folding>
+            <element signature="e#22#55#0" expanded="true" />
+            <element signature="e#300#528#0" expanded="false" />
+            <element signature="e#556#959#0" expanded="false" />
           </folding>
         </state>
       </provider>
