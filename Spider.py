@@ -47,6 +47,13 @@ class Spider(object):
 
     def ban_account(self):
 
+        url = 'http://sass.weibo.com/unfreeze'
+        html = open_url(self.fetchers[self.main_fetcher], url)
+        is_exceptional = self.parser.is_exceptional(html)
+        is_frozen = self.parser.is_frozen(html)
+        if is_exceptional is False and is_frozen is False:
+            return
+
         account = self.users[self.main_fetcher].acct
         Dao.Account.ban(account)
 
@@ -376,12 +383,15 @@ class Spider(object):
         uid = pid[6:]
         is_taobao = None
         while is_taobao is None:
-            is_taobao = self.is_taobao(uid) # get taobao information in advance
-            if is_taobao == -1:
-                self.ban_account()
-                if len(self.fetchers) == 0:
-                    raise Exception('No valid account!')
-                is_taobao = None
+            try:
+                is_taobao = self.is_taobao(uid) # get taobao information in advance
+                if is_taobao == -1:
+                    self.ban_account()
+                    if len(self.fetchers) == 0:
+                        raise Exception('No valid account!')
+                    is_taobao = None
+            except Exception as e:
+                print e.message
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
 
         profile = None
@@ -397,6 +407,7 @@ class Spider(object):
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
         self.profile_list.append(profile)
+
     def is_taobao(self, uid):
         '''
 

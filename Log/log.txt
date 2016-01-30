@@ -30,3 +30,120 @@
 2016-01-29 14:01:10,459 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
 2016-01-29 14:09:25,644 - Parser.py:714 - 'NoneType' object has no attribute 'find'
 2016-01-29 14:09:25,647 - Parser.py:727 - 'NoneType' object has no attribute 'text'
+2016-01-29 19:57:13,078 - Parser.py:714 - 'NoneType' object has no attribute 'find'
+2016-01-29 19:57:13,081 - Parser.py:727 - 'NoneType' object has no attribute 'text'
+2016-01-29 20:40:07,765 - Parser.py:798 - 'NoneType' object has no attribute '__getitem__'
+2016-01-29 20:40:28,628 - Parser.py:714 - 'NoneType' object has no attribute 'find'
+2016-01-29 20:40:28,631 - Parser.py:727 - 'NoneType' object has no attribute 'text'
+2016-01-29 21:01:43,943 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 21:40:44,608 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 22:29:44,473 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 22:29:56,118 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 22:35:42,210 - Spider.py:318 - No JSON object could be decoded
+2016-01-29 22:37:58,687 - Spider.py:318 - No JSON object could be decoded
+2016-01-29 22:51:17,838 - Spider.py:318 - No JSON object could be decoded
+2016-01-29 22:58:58,372 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 23:16:43,295 - Spider.py:318 - No JSON object could be decoded
+2016-01-29 23:30:05,799 - Parser.py:714 - 'NoneType' object has no attribute 'find'
+2016-01-29 23:30:05,802 - Parser.py:727 - 'NoneType' object has no attribute 'text'
+2016-01-29 23:30:14,894 - Parser.py:714 - 'NoneType' object has no attribute 'find'
+2016-01-29 23:30:14,895 - Parser.py:727 - 'NoneType' object has no attribute 'text'
+2016-01-29 23:31:28,918 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-29 23:31:42,125 - Parser.py:1415 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:09:56,266 - pool.py:638 - Exception during reset or similar
+Traceback (most recent call last):
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\sqlalchemy\pool.py", line 631, in _finalize_fairy
+    fairy._reset(pool)
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\sqlalchemy\pool.py", line 765, in _reset
+    pool._dialect.do_rollback(self)
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\sqlalchemy\dialects\mysql\base.py", line 2519, in do_rollback
+    dbapi_connection.rollback()
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\pymysql\connections.py", line 711, in rollback
+    self._read_ok_packet()
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\pymysql\connections.py", line 685, in _read_ok_packet
+    pkt = self._read_packet()
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\pymysql\connections.py", line 882, in _read_packet
+    packet_header = self._read_bytes(4)
+  File "C:\Users\chzhu.SMUSTF\AppData\Local\Continuum\Anaconda\lib\site-packages\pymysql\connections.py", line 906, in _read_bytes
+    "Lost connection to MySQL server during query (%s)" % (e,))
+OperationalError: (2013, 'Lost connection to MySQL server during query ([Errno 10053] An established connection was aborted by the software in your host machine)')
+2016-01-30 14:28:12,444 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:45:52,437 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:54:20,388 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:12,301 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:12,479 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:12,976 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:13,154 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:21,184 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:29,767 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:29,859 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 14:55:29,950 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:20:36,023 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 15:20:36,026 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:21:14,707 - Parser.py:81 - html
+2016-01-30 15:26:15,801 - Parser.py:806 - 'NoneType' object has no attribute '__getitem__'
+2016-01-30 15:26:31,983 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:38:49,565 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:40:22,273 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:40:22,369 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:40:31,525 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:40:31,878 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:40:32,072 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:35,561 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:35,930 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:47,091 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:47,193 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:47,645 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:47,746 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:47,845 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:47,970 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:48,145 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:48,246 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:41:57,253 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:42:58,904 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:42:59,075 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:42:59,476 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:43:17,739 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:43:26,940 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:43:27,280 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:43:27,483 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:12,176 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:13,115 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:25,045 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:25,338 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:25,457 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:25,875 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:26,165 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:35,234 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:44:35,641 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:45:40,825 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:45:41,000 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:02,637 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:02,941 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:03,045 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:03,332 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:49,693 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:49,915 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:46:50,157 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:47:02,933 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:47:03,032 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:47:10,438 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:47:10,823 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:48:13,749 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 15:48:14,638 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 16:13:59,421 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 16:13:59,423 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 17:17:45,492 - Parser.py:81 - html
+2016-01-30 17:31:20,194 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 17:31:20,197 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 17:31:27,631 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 17:31:27,634 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 17:41:36,786 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-01-30 17:59:29,622 - Parser.py:81 - html
+2016-01-30 18:07:45,026 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 18:07:45,029 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 18:07:45,155 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 18:07:45,157 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 18:08:05,676 - Parser.py:722 - 'NoneType' object has no attribute 'find'
+2016-01-30 18:08:05,677 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-01-30 18:10:41,115 - Parser.py:81 - html

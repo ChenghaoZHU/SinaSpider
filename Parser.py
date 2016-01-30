@@ -9,6 +9,14 @@ from Log import logger as log
 
 class HtmlParser(object):
 
+    def is_exceptional(self, html):
+
+        soup = BeautifulSoup(html)
+        if u' 您当前使用的账号存在异常，请完成以下操作解除异常状态' in soup.text:
+            return True
+        else:
+            return False
+
     def is_frozen(self, html):
         soup = BeautifulSoup(html)
         try:
@@ -1635,6 +1643,7 @@ class HtmlParser(object):
         :param timestamp:
         :return: a dict displaying profile
         '''
+
         soup = BeautifulSoup(html)
         scripts = soup.find_all('script')
         frame_a = None # frame that contains avatar, background ...
