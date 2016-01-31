@@ -78,7 +78,7 @@ if __name__ == '__main__':
     crawled_list = []
     spider, uid_list, user_list = initialization()
 
-    start_time = datetime.now()
+    spider.start_time = datetime.now()
     try:
         while True:
             for uid in uid_list:
@@ -86,11 +86,11 @@ if __name__ == '__main__':
                 spider.collect_user_information(uid)
                 spider.save()
                 crawled_list.append(uid)
-                end_time = datetime.now()
-                duration = end_time - start_time
+                spider.end_time = datetime.now()
+                duration = spider.end_time - spider.start_time
                 if duration.seconds > ACCOUNT_CHANGE_TIME:
                     spider.main_fetcher = loop_increase(spider.main_fetcher, len(spider.fetchers))
-                    start_time = datetime.now()
+                    spider.start_time = datetime.now()
                     emphasis_print('Account changed!!!')
 
             print 'Complete a batch of tasks!'

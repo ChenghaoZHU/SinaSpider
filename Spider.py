@@ -2,7 +2,7 @@
 __author__ = 'chzhu'
 
 from Weibo import Weibo
-from Utility import emphasis_print, open_url
+from Utility import emphasis_print, open_url, loop_increase
 from Parser import HtmlParser
 from datetime import datetime
 import urllib
@@ -44,6 +44,8 @@ class Spider(object):
         self.followee_list = [] # store followees
         self.timeline_list = [] # store timelines
         self.profile_list = [] # store profiles
+        self.start_time = None
+        self.end_time = None
 
     def ban_account(self):
 
@@ -264,6 +266,12 @@ class Spider(object):
                 if html is not None:
                     timelines = self.parser.parse_timelines(html, uid, datetime.now())
                     self.timeline_list.extend(timelines)
+            self.end_time = datetime.now()
+            duration = self.end_time - self.start_time
+            if duration.seconds > Config.ACCOUNT_CHANGE_TIME:
+                self.main_fetcher = loop_increase(self.main_fetcher, len(self.fetchers))
+                self.start_time = datetime.now()
+                emphasis_print('Account changed!!!')
             time.sleep(random.randint(Config.SLEEP_BETWEEN_TIMELINE_PAGES, 2*Config.SLEEP_BETWEEN_TIMELINE_PAGES))
 
     def fetch_timelines_by_page_bar(self, uid, pnum, bnum):
@@ -322,6 +330,10 @@ class Spider(object):
             except Exception as e:
                 if 'No valid account!' in e.message:
                     raise e
+                if 'No JSON object could be decoded' in e.message:
+                    self.ban_account()
+                    if len(self.fetchers) == 0:
+                        raise Exception('No valid account!')
                 log.warning(e.message)
                 time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                 continue
