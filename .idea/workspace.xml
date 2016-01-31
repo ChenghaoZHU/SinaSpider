@@ -32,12 +32,12 @@
         <entry file="file://$PROJECT_DIR$/Spider.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+              <caret line="275" column="100" selection-start-line="275" selection-start-column="100" selection-end-line="275" selection-end-column="100" />
               <folding>
                 <element signature="e#38#61#0" expanded="true" />
-                <element signature="e#3388#3476#0" expanded="false" />
-                <element signature="e#24831#25049#0" expanded="false" />
-                <element signature="e#24831#24921#1" expanded="false" />
+                <element signature="e#3445#3533#0" expanded="false" />
+                <element signature="e#25001#25219#0" expanded="false" />
+                <element signature="e#25001#25091#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -78,8 +78,8 @@
       <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48335248">
-              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.75889784">
+              <caret line="95" column="40" selection-start-line="95" selection-start-column="40" selection-end-line="95" selection-end-column="40" />
               <folding>
                 <element signature="e#22#55#0" expanded="true" />
                 <element signature="e#300#528#0" expanded="false" />
@@ -136,8 +136,8 @@
         <option value="$PROJECT_DIR$/Dao.py" />
         <option value="$PROJECT_DIR$/Parser.py" />
         <option value="$PROJECT_DIR$/Config.py" />
-        <option value="$PROJECT_DIR$/Spider.py" />
         <option value="$PROJECT_DIR$/CompleteCrawl.py" />
+        <option value="$PROJECT_DIR$/Spider.py" />
       </list>
     </option>
   </component>
@@ -149,8 +149,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-217" />
-    <option name="y" value="55" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -515,7 +515,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-217" y="55" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21268657" sideWeight="0.49442896" order="0" side_tool="false" content_ui="combo" />
@@ -656,9 +656,9 @@
           <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#3388#3476#0" expanded="false" />
-            <element signature="e#24831#25049#0" expanded="false" />
-            <element signature="e#24831#24921#1" expanded="false" />
+            <element signature="e#3445#3533#0" expanded="false" />
+            <element signature="e#25001#25219#0" expanded="false" />
+            <element signature="e#25001#25091#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -707,9 +707,9 @@
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#3388#3476#0" expanded="false" />
-            <element signature="e#24831#25049#0" expanded="false" />
-            <element signature="e#24831#24921#1" expanded="false" />
+            <element signature="e#3445#3533#0" expanded="false" />
+            <element signature="e#25001#25219#0" expanded="false" />
+            <element signature="e#25001#25091#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -964,20 +964,20 @@
     <entry file="file://$PROJECT_DIR$/Spider.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+          <caret line="275" column="100" selection-start-line="275" selection-start-column="100" selection-end-line="275" selection-end-column="100" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#3388#3476#0" expanded="false" />
-            <element signature="e#24831#25049#0" expanded="false" />
-            <element signature="e#24831#24921#1" expanded="false" />
+            <element signature="e#3445#3533#0" expanded="false" />
+            <element signature="e#25001#25219#0" expanded="false" />
+            <element signature="e#25001#25091#1" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48335248">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.75889784">
+          <caret line="95" column="40" selection-start-line="95" selection-start-column="40" selection-end-line="95" selection-end-column="40" />
           <folding>
             <element signature="e#22#55#0" expanded="true" />
             <element signature="e#300#528#0" expanded="false" />

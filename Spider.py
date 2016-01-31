@@ -58,6 +58,7 @@ class Spider(object):
 
         account = self.users[self.main_fetcher].acct
         Dao.Account.ban(account)
+        emphasis_print('One account has been banned!!!')
 
         self.users.pop(self.main_fetcher)
         self.fetchers.pop(self.main_fetcher)
@@ -272,6 +273,7 @@ class Spider(object):
                 self.main_fetcher = loop_increase(self.main_fetcher, len(self.fetchers))
                 self.start_time = datetime.now()
                 emphasis_print('Account changed!!!')
+                emphasis_print('Now %d of %d accounts are working!' % (self.main_fetcher+1, len(self.fetchers)))
             time.sleep(random.randint(Config.SLEEP_BETWEEN_TIMELINE_PAGES, 2*Config.SLEEP_BETWEEN_TIMELINE_PAGES))
 
     def fetch_timelines_by_page_bar(self, uid, pnum, bnum):
