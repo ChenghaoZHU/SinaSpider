@@ -78,7 +78,6 @@ if __name__ == '__main__':
     crawled_list = []
     spider, uid_list, user_list = initialization()
 
-    spider.start_time = datetime.now()
     try:
         while True:
             for uid in uid_list:

@@ -44,7 +44,7 @@ class Spider(object):
         self.followee_list = [] # store followees
         self.timeline_list = [] # store timelines
         self.profile_list = [] # store profiles
-        self.start_time = None
+        self.start_time = datetime.now()
         self.end_time = None
 
     def ban_account(self):
