@@ -1,5 +1,8 @@
 __author__ = 'chzhu'
 
+import time, random
+import Config
+
 # decorators
 def star_segment(func):
     """
@@ -24,6 +27,8 @@ def Excalibur(func):
                 return func(opener, url)
             except Exception as e:
                 print e
+                if 'HTTP Error 501: Not Implemented' in e.message:
+                    time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
     return _Excalibur
 
 # utilities

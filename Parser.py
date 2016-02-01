@@ -702,7 +702,7 @@ class HtmlParser(object):
             data = followee['action-data']
             data = data.split('&')
             for dt in data:
-                if u'sex' in dt:
+                if u'sex=' in dt:
                     return dt.split('=')[-1].upper()
             return None
         except Exception as e:
