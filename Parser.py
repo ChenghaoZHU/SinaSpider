@@ -309,7 +309,7 @@ class HtmlParser(object):
             action_data = follower['action-data']
             datas = action_data.split('&')
             for dt in datas:
-                if 'sex' in dt:
+                if 'sex=' in dt:
                     gender = dt.split('=')[-1]
                     return gender.upper()
             return None
