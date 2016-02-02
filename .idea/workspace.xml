@@ -55,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Parser.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.052813">
+            <state vertical-scroll-proportion="0.0">
               <caret line="1636" column="8" selection-start-line="1636" selection-start-column="8" selection-end-line="1636" selection-end-column="8" />
               <folding />
             </state>
@@ -77,14 +77,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5177956">
+              <caret line="87" column="56" selection-start-line="87" selection-start-column="56" selection-end-line="87" selection-end-column="56" />
               <folding>
                 <element signature="e#22#55#0" expanded="true" />
-                <element signature="e#300#528#0" expanded="false" />
+                <element signature="e#315#543#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -144,11 +144,11 @@
         <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/AddAccounts.py" />
         <option value="$PROJECT_DIR$/Dao.py" />
-        <option value="$PROJECT_DIR$/CompleteCrawl.py" />
         <option value="$PROJECT_DIR$/Spider.py" />
         <option value="$PROJECT_DIR$/Utility.py" />
         <option value="$PROJECT_DIR$/Config.py" />
         <option value="$PROJECT_DIR$/Parser.py" />
+        <option value="$PROJECT_DIR$/CompleteCrawl.py" />
       </list>
     </option>
   </component>
@@ -584,11 +584,6 @@
           <line>109</line>
           <option name="timeStamp" value="196" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/CompleteCrawl.py</url>
-          <line>85</line>
-          <option name="timeStamp" value="207" />
-        </line-breakpoint>
       </breakpoints>
       <option name="time" value="215" />
     </breakpoint-manager>
@@ -963,17 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding>
-            <element signature="e#22#55#0" expanded="true" />
-            <element signature="e#300#528#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Spider.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -999,9 +983,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.052813">
+        <state vertical-scroll-proportion="0.0">
           <caret line="1636" column="8" selection-start-line="1636" selection-start-column="8" selection-end-line="1636" selection-end-column="8" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5177956">
+          <caret line="87" column="56" selection-start-line="87" selection-start-column="56" selection-end-line="87" selection-end-column="56" />
+          <folding>
+            <element signature="e#22#55#0" expanded="true" />
+            <element signature="e#315#543#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

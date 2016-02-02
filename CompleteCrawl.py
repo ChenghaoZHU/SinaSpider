@@ -7,6 +7,7 @@ from Dao import Database, Task, Account
 from Spider import User
 from Config import ACCOUNT_NUM, TASK_NUM, ACCOUNT_CHANGE_TIME
 from Utility import emphasis_print
+import pymysql
 
 def initialization():
     # get a list of user ids as tasks
@@ -83,7 +84,14 @@ if __name__ == '__main__':
             for uid in uid_list:
                 emphasis_print('Now %d of %d accounts are working!' % (spider.main_fetcher+1, len(spider.fetchers)))
                 spider.collect_user_information(uid)
-                spider.save()
+
+                while True: # in case of connection lost
+                    try:
+                        spider.save()
+                        break
+                    except pymysql.err.OperationalError:
+                        continue
+
                 crawled_list.append(uid)
                 spider.end_time = datetime.now()
                 duration = spider.end_time - spider.start_time
