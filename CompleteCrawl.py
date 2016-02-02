@@ -89,7 +89,7 @@ if __name__ == '__main__':
                     try:
                         spider.save()
                         break
-                    except pymysql.err.OperationalError:
+                    except pymysql.OperationalError:
                         continue
 
                 crawled_list.append(uid)
