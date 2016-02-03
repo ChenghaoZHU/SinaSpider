@@ -7,7 +7,7 @@ from Dao import Database, Task, Account
 from Spider import User
 from Config import ACCOUNT_NUM, TASK_NUM, ACCOUNT_CHANGE_TIME
 from Utility import emphasis_print
-import pymysql
+from Log import logger as log
 
 def initialization():
     # get a list of user ids as tasks
@@ -89,8 +89,9 @@ if __name__ == '__main__':
                     try:
                         spider.save()
                         break
-                    except pymysql.OperationalError:
-                        continue
+                    except Exception as e:
+                        if 'Lost connection to MySQL server during query' in e.message:
+                            continue
 
                 crawled_list.append(uid)
                 spider.end_time = datetime.now()
@@ -108,5 +109,7 @@ if __name__ == '__main__':
                 exit(-1)
     except Exception as e:
         print e.message
+        print 'Problematic UID: %s' % (uid, )
+        log.error('Problematic UID: %s' % (uid, ))
     finally:
         reset(user_list, uid_list, crawled_list) # reset
