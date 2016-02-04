@@ -413,6 +413,7 @@ class Spider(object):
         while profile is None:
             fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
+            print 'html got.'
             if self.parser.parse_uid(html) == -1:
                 self.ban_account()
                 if len(self.fetchers) == 0:
