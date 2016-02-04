@@ -419,6 +419,8 @@ class Spider(object):
                     raise Exception('No valid account!')
                 continue
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
+            if profile is None:
+                print 'debug!!!'
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
         self.profile_list.append(profile)
 
