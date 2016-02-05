@@ -415,10 +415,12 @@ class Spider(object):
             html = open_url(fetcher, url)
             print 'html got.'
             if self.parser.parse_uid(html) == -1:
+                print 'uid -1.'
                 self.ban_account()
                 if len(self.fetchers) == 0:
                     raise Exception('No valid account!')
                 continue
+            print 'Before profile'
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
             if profile is None:
                 print 'debug!!!'
