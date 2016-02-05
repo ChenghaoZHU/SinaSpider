@@ -90,6 +90,7 @@ if __name__ == '__main__':
                         spider.save()
                         break
                     except Exception as e:
+                        print e.message
                         if 'Lost connection to MySQL server during query' in e.message:
                             continue
 
