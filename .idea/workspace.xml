@@ -90,8 +90,8 @@
       <file leaf-file-name="CompleteCrawl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44199705">
-              <caret line="91" column="42" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.5521292">
+              <caret line="96" column="33" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
               <folding>
                 <element signature="e#22#55#0" expanded="true" />
                 <element signature="e#330#558#0" expanded="false" />
@@ -526,7 +526,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21428572" sideWeight="0.49442896" order="0" side_tool="false" content_ui="combo" />
@@ -997,8 +997,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44199705">
-          <caret line="91" column="42" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.5521292">
+          <caret line="96" column="33" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
           <folding>
             <element signature="e#22#55#0" expanded="true" />
             <element signature="e#330#558#0" expanded="false" />

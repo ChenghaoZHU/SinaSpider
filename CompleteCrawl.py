@@ -93,6 +93,8 @@ if __name__ == '__main__':
                         print e.message, uid
                         if 'Lost connection to MySQL server during query' in e.message:
                             continue
+                        else:
+                            break
 
                 crawled_list.append(uid)
                 spider.end_time = datetime.now()
