@@ -19,6 +19,13 @@ if __name__ == '__main__':
     #     sp.collect_user_profiles_only(uid)
     #     sp.save_only_profile()
 
-    acc_list = ['1113904572', '1933039147']
-    Task.reset(acc_list)
-    pass
+    user = Spider.User('xded0o@mailnesia.com', 'pp9999')
+    user_list = [user]
+    sp = SP(user_list)
+
+    from Utility import open_url
+
+    uid = '2971804112'
+    url = 'http://www.weibo.com/aj/v6/user/newcard?ajwvr=6&id=%s&type=0&refer_flag=0000011002_&callback=STK_145465715259821'
+    r = open_url(sp.fetchers[sp.main_fetcher], url%uid)
+    print 'dd'
