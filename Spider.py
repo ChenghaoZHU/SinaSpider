@@ -337,6 +337,8 @@ class Spider(object):
                     if len(self.fetchers) == 0:
                         raise Exception('No valid account!')
                 log.warning(e.message)
+                with open('debug.txt', 'w') as writer:
+                    writer.write(jsn_data)
                 time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                 continue
     def get_timeline_page_num(self, uid):

@@ -163,3 +163,6 @@ OperationalError: (2013, 'Lost connection to MySQL server during query ([Errno 1
 2016-02-01 12:55:05,947 - Parser.py:735 - 'NoneType' object has no attribute 'text'
 2016-02-01 12:55:06,783 - Parser.py:722 - 'NoneType' object has no attribute 'find'
 2016-02-01 12:55:06,792 - Parser.py:735 - 'NoneType' object has no attribute 'text'
+2016-02-17 09:23:58,282 - Parser.py:1287 - list index out of range
+2016-02-17 09:23:58,342 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
+2016-02-17 09:23:58,907 - Parser.py:1423 - 'NoneType' object has no attribute 'text'
