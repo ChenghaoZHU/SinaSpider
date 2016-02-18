@@ -9,6 +9,19 @@ from Log import logger as log
 
 class HtmlParser(object):
 
+    def is_visitor(self, html):
+        '''
+
+        :param html:
+        :return: Ture if this account is in visitor status
+        '''
+        soup = BeautifulSoup(html)
+        if 'Sina Visitor System' in soup.find('title').text:
+            return True
+        else:
+            return False
+
+
     def is_exceptional(self, html):
 
         soup = BeautifulSoup(html)

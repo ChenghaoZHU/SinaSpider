@@ -65,6 +65,19 @@ class Spider(object):
         if self.main_fetcher == len(self.fetchers):
             self.main_fetcher = 0
 
+    def reset_account(self):
+
+        account = self.users[self.main_fetcher].acct
+        accounts = []
+        accounts.append(account)
+        Dao.Account.reset(accounts)
+        emphasis_print('One account expires!!!')
+
+        self.users.pop(self.main_fetcher)
+        self.fetchers.pop(self.main_fetcher)
+        if self.main_fetcher == len(self.fetchers):
+            self.main_fetcher = 0
+
 
     def collect_user_information(self, uid):
         print 'Collecting information for User %s...' % (uid,)
@@ -333,12 +346,13 @@ class Spider(object):
                 if 'No valid account!' in e.message:
                     raise e
                 if 'No JSON object could be decoded' in e.message:
-                    self.ban_account()
+                    if self.parser.is_visitor(jsn_data) is True:
+                        self.reset_account()
+                    else:
+                        self.ban_account()
                     if len(self.fetchers) == 0:
                         raise Exception('No valid account!')
                 log.warning(e.message)
-                with open('debug.txt', 'w') as writer:
-                    writer.write(jsn_data)
                 time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                 continue
     def get_timeline_page_num(self, uid):
