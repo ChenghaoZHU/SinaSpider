@@ -122,6 +122,9 @@ class Account(Base):
 
         db.close()
 
+
+
+
     @classmethod
     def ban(cls, account):
         db = Database()

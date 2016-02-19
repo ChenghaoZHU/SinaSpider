@@ -31,13 +31,13 @@
       <file leaf-file-name="Spider.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6257176">
-              <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.5396097">
+              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding>
                 <element signature="e#38#61#0" expanded="true" />
-                <element signature="e#3887#3975#0" expanded="false" />
-                <element signature="e#25618#25836#0" expanded="false" />
-                <element signature="e#25618#25708#1" expanded="false" />
+                <element signature="e#3838#3926#0" expanded="false" />
+                <element signature="e#25569#25787#0" expanded="false" />
+                <element signature="e#25569#25659#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -91,10 +91,9 @@
         <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+              <caret line="89" column="34" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
               <folding>
                 <element signature="e#22#55#0" expanded="true" />
-                <element signature="e#330#558#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -114,7 +113,7 @@
         <entry file="file://$PROJECT_DIR$/Dao.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="119" column="73" selection-start-line="119" selection-start-column="73" selection-end-line="119" selection-end-column="73" />
+              <caret line="124" column="0" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -142,12 +141,12 @@
         <option value="$PROJECT_DIR$/CommercialAPISpider.py" />
         <option value="$PROJECT_DIR$/Weibo.py" />
         <option value="$PROJECT_DIR$/AddAccounts.py" />
-        <option value="$PROJECT_DIR$/Dao.py" />
         <option value="$PROJECT_DIR$/Utility.py" />
         <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/CompleteCrawl.py" />
         <option value="$PROJECT_DIR$/Config.py" />
         <option value="$PROJECT_DIR$/Parser.py" />
+        <option value="$PROJECT_DIR$/Dao.py" />
         <option value="$PROJECT_DIR$/Spider.py" />
       </list>
     </option>
@@ -526,7 +525,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2185501" sideWeight="0.49442896" order="0" side_tool="false" content_ui="combo" />
@@ -673,9 +672,9 @@
           <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#3887#3975#0" expanded="false" />
-            <element signature="e#25618#25836#0" expanded="false" />
-            <element signature="e#25618#25708#1" expanded="false" />
+            <element signature="e#3838#3926#0" expanded="false" />
+            <element signature="e#25569#25787#0" expanded="false" />
+            <element signature="e#25569#25659#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -724,9 +723,9 @@
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#3887#3975#0" expanded="false" />
-            <element signature="e#25618#25836#0" expanded="false" />
-            <element signature="e#25618#25708#1" expanded="false" />
+            <element signature="e#3838#3926#0" expanded="false" />
+            <element signature="e#25569#25787#0" expanded="false" />
+            <element signature="e#25569#25659#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -929,14 +928,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weibo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Utility.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -944,6 +935,22 @@
           <folding>
             <element signature="e#22#41#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weibo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -968,15 +975,7 @@
     <entry file="file://$PROJECT_DIR$/Dao.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="119" column="73" selection-start-line="119" selection-start-column="73" selection-end-line="119" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
+          <caret line="124" column="0" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -984,23 +983,22 @@
     <entry file="file://$PROJECT_DIR$/CompleteCrawl.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+          <caret line="89" column="34" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
           <folding>
             <element signature="e#22#55#0" expanded="true" />
-            <element signature="e#330#558#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6257176">
-          <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.5396097">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding>
             <element signature="e#38#61#0" expanded="true" />
-            <element signature="e#3887#3975#0" expanded="false" />
-            <element signature="e#25618#25836#0" expanded="false" />
-            <element signature="e#25618#25708#1" expanded="false" />
+            <element signature="e#3838#3926#0" expanded="false" />
+            <element signature="e#25569#25787#0" expanded="false" />
+            <element signature="e#25569#25659#1" expanded="false" />
           </folding>
         </state>
       </provider>

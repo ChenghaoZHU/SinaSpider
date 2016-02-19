@@ -67,8 +67,7 @@ class Spider(object):
 
     def reset_account(self):
 
-        print self.users[self.main_fetcher]
-        account = self.users[self.main_fetcher].acct
+        account = self.users[self.main_fetcher]
         accounts = []
         accounts.append(account)
         Dao.Account.reset(accounts)
