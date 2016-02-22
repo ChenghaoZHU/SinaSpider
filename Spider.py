@@ -430,6 +430,9 @@ class Spider(object):
             fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
 
+            with open('debug.txt', 'w') as writer:
+                writer.write(html)
+
             if self.parser.parse_uid(html) == -1:
                 print 'uid -1.'
                 self.ban_account()
@@ -451,6 +454,10 @@ class Spider(object):
         fetcher = self.fetchers[self.main_fetcher]
         url = 'http://www.weibo.com/u/' + uid
         html = open_url(fetcher, url)
+
+        with open('debug.txt', 'w') as writer:
+            writer.write(html)
+
 
         return self.parser.parse_is_taobao(html)
 
