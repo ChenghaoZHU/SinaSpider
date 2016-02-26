@@ -21,6 +21,32 @@ class HtmlParser(object):
         else:
             return False
 
+    def parse_is_enterprise(self, html):
+        '''
+
+        :param html:  Ture if this page's owner is an enterprise user
+        :return:
+        '''
+        soup = BeautifulSoup(html)
+        scripts = soup.find_all('script')
+        frame = None # frame that contains avatar, background ...
+
+        for scr in scripts:
+            if ur'class=\"photo\"' in scr.text:
+                frame = scr
+                break
+
+        if frame is None:
+            return None # dirty html
+
+        html = self.covert_script_to_hmtl(frame)
+        soup = BeautifulSoup(html)
+
+        if soup.find('em', 'W_icon icon_pf_approve_co') is not None:
+            return True
+        else:
+            return False
+
 
     def is_exceptional(self, html):
 

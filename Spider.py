@@ -47,6 +47,16 @@ class Spider(object):
         self.start_time = datetime.now()
         self.end_time = None
 
+    def delete_enterprise_user(self, uid):
+        '''
+
+        :param uid: to delete
+        :return:
+        '''
+
+        Dao.Task.delete_user(uid)
+
+
     def ban_account(self):
 
         url = 'http://sass.weibo.com/unfreeze'
@@ -86,6 +96,10 @@ class Spider(object):
             print 'User does not exist!'
             self.set_user_deleted_by_uid(uid)
             return 404
+        elif pid == -1:
+            print 'This user is an enterprise user!'
+            self.delete_enterprise_user(uid)
+            return -1
 
         self.get_followers(pid)
         print 'Followers crawled.'
@@ -137,6 +151,9 @@ class Spider(object):
         url = 'http://www.weibo.com/u/%s' % (uid,)
         while True:
             html = open_url(fetcher, url)
+            is_enterprise = self.parser.parse_is_enterprise(html)
+            if is_enterprise is True:
+                return -1 # -1 denotes this user is an enterprise
             pid = self.parser.parse_pid(html)
             if pid is not None:
                 return pid
@@ -466,8 +483,6 @@ class Spider(object):
         save crawled information to DB
         :return:
         '''
-
-
 
         self.transformation()
         self.clear_null_data() # this function must be called after self.transformation

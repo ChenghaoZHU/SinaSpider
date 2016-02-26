@@ -102,6 +102,14 @@ class Task(Base):
 
         db.close()
 
+    @classmethod
+    def delete_user(cls, uid):
+        db = Database()
+        db.connect()
+        cursor = db.session.query(cls).filter(cls.uid == uid).one()
+        cursor.is_deleted = '1'
+
+        db.close()
 
 
 class Account(Base):

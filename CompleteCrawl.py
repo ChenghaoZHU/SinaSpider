@@ -83,7 +83,9 @@ if __name__ == '__main__':
         while True:
             for uid in uid_list:
                 emphasis_print('Now %d of %d accounts are working!' % (spider.main_fetcher+1, len(spider.fetchers)))
-                spider.collect_user_information(uid)
+                retcode = spider.collect_user_information(uid)
+                if retcode == 404 or retcode == -1:
+                    continue
 
                 while True: # in case of connection lost
                     try:
