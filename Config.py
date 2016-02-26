@@ -29,4 +29,4 @@ DB_CHARSET = 'utf8mb4'
 ACCOUNT_NUM = 3
 TASK_NUM = 100
 
-OS = 0 # 0 is for Windows, 1 is for Linux
+OS = 1 # 0 is for Windows, 1 is for Linux
