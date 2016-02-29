@@ -75,6 +75,9 @@ class Spider(object):
         if self.main_fetcher == len(self.fetchers):
             self.main_fetcher = 0
 
+        if len(self.fetchers) == 0:
+            raise Exception('No valid account!')
+
     def reset_account(self):
 
         account = self.users[self.main_fetcher]
@@ -88,6 +91,8 @@ class Spider(object):
         if self.main_fetcher == len(self.fetchers):
             self.main_fetcher = 0
 
+        if len(self.fetchers) == 0:
+            raise Exception('No valid account!')
 
     def collect_user_information(self, uid):
         print 'Collecting information for User %s...' % (uid,)
@@ -170,12 +175,15 @@ class Spider(object):
         while True:
             fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
+
             uid = self.parser.parse_uid(html)
             if uid == -1:
                 self.ban_account()
-                if len(self.fetchers) == 0:
-                    raise Exception('No valid account!')
                 continue
+            elif self.parser.is_visitor(html) is True:
+                self.reset_account()
+                continue
+
             fer_page_num = self.get_follower_page_num(html)
             if fer_page_num is not None:
                 break
@@ -224,12 +232,15 @@ class Spider(object):
         while True:
             fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
+
             uid = self.parser.parse_uid(html)
             if uid == -1:
                 self.ban_account()
-                if len(self.fetchers) == 0:
-                    raise Exception('No valid account!')
                 continue
+            elif self.parser.is_visitor(html) is True:
+                self.reset_account()
+                continue
+
             fee_page_num = self.get_followee_page_num(html)
             if fee_page_num is not None:
                 break
@@ -351,8 +362,6 @@ class Spider(object):
                 jsn_data = open_url(self.fetchers[self.main_fetcher], url)
                 if self.parser.is_frozen(jsn_data):
                     self.ban_account()
-                    if len(self.fetchers) == 0:
-                        raise Exception('No valid account!')
                     continue
 
                 data = json.loads(jsn_data)
@@ -369,8 +378,6 @@ class Spider(object):
                         self.reset_account()
                     else:
                         self.ban_account()
-                    if len(self.fetchers) == 0:
-                        raise Exception('No valid account!')
                 log.warning(e.message)
                 time.sleep(random.randint(Config.SLEEP_WHEN_EXCEPTION, 2*Config.SLEEP_WHEN_EXCEPTION))
                 continue
@@ -433,12 +440,15 @@ class Spider(object):
         is_taobao = None
         while is_taobao is None:
             try:
+
                 is_taobao = self.is_taobao(uid) # get taobao information in advance
                 if is_taobao == -1:
                     self.ban_account()
-                    if len(self.fetchers) == 0:
-                        raise Exception('No valid account!')
                     is_taobao = None
+                elif is_taobao == -2:
+                    self.reset_account()
+                    is_taobao = None
+
             except Exception as e:
                 print e.message
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
@@ -449,19 +459,16 @@ class Spider(object):
             fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
 
-            if self.parser.parse_uid(html) == -1:
-                print 'uid -1.'
+            if self.parser.parse_uid(html) == -1: # if -1 that means this working account maybe be banned
                 self.ban_account()
-                if len(self.fetchers) == 0:
-                    raise Exception('No valid account!')
                 continue
             elif self.parser.is_visitor(html) is True: # judge whether working account falls into visitor status
                 self.reset_account()
                 continue
 
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
-
             time.sleep(random.randint(Config.SLEEP_BETWEEN_2FPAGES, 2*Config.SLEEP_BETWEEN_2FPAGES))
+
         self.profile_list.append(profile)
 
     def is_taobao(self, uid):
@@ -477,6 +484,10 @@ class Spider(object):
         with open('debug_taobao.txt', 'w') as writer:
             writer.write(html)
 
+        if self.parser.parse_uid(html) == -1:
+            return -1 # account is banned
+        elif self.parser.is_visitor(html) is True:
+            return -2 # account is in visitor status
 
         return self.parser.parse_is_taobao(html)
 

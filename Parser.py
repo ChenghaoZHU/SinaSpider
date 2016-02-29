@@ -144,10 +144,6 @@ class HtmlParser(object):
         :param html:
         :return: '1' is taobao, '0' is not
         '''
-        uid = self.parse_uid(html)
-        if uid == -1:
-            return -1 # account is banned
-
         if html is None:
             return None
 
