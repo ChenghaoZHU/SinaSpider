@@ -151,6 +151,8 @@ class Spider(object):
         url = 'http://www.weibo.com/u/%s' % (uid,)
         while True:
             html = open_url(fetcher, url)
+            with open('debug_get_pid.txt', 'w') as pen:
+                pen.write(html)
             is_enterprise = self.parser.parse_is_enterprise(html)
             if is_enterprise is True:
                 return -1 # -1 denotes this user is an enterprise
@@ -447,14 +449,14 @@ class Spider(object):
             fetcher = self.fetchers[self.main_fetcher]
             html = open_url(fetcher, url)
 
-            with open('debug.txt', 'w') as writer:
-                writer.write(html)
-
             if self.parser.parse_uid(html) == -1:
                 print 'uid -1.'
                 self.ban_account()
                 if len(self.fetchers) == 0:
                     raise Exception('No valid account!')
+                continue
+            elif self.parser.is_visitor(html) is True: # judge whether working account falls into visitor status
+                self.reset_account()
                 continue
 
             profile = self.parser.parse_profile(html, pid, is_taobao, datetime.now())
@@ -472,7 +474,7 @@ class Spider(object):
         url = 'http://www.weibo.com/u/' + uid
         html = open_url(fetcher, url)
 
-        with open('debug.txt', 'w') as writer:
+        with open('debug_taobao.txt', 'w') as writer:
             writer.write(html)
 
 
