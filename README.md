@@ -26,6 +26,9 @@ If you have installed anaconda and use Red Hat Linux, following commands may be 
 
 	sudo yum install caca-utils 
 	
+### 2.3 Install MySQL Database
+MySQL is only required to be installed in the master node. The corresponding table structures are saved in the **sina_weibo_table_structures.sql** file. You can create the database by executing the sql file easily.
+
 ## 3. Get Started
 Before you run the spider with:
 	
@@ -53,7 +56,11 @@ All the parameters in this file are listed as follows:
 
 Usually, you could just only edit **DB_USER**, **DB_PASSWD**, **DB_HOST** and **OS** to start a spider. While other parameters are designed for personal customization.
 
-
 ## 4. FAQ
+**Q**: Why I couldn't view the captcha picture in Windows 7?
+**A**: http://stackoverflow.com/questions/7715501/pil-image-show-doesnt-work-on-windows-7
+  
+  
+
 
 
