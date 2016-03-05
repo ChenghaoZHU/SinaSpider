@@ -114,7 +114,6 @@ if __name__ == '__main__':
                 exit(-1)
     except Exception as e:
         print e.message
-        print 'Problematic UID: %s' % (uid, )
         log.error('Problematic UID: %s' % (uid, ))
     finally:
         reset(user_list, uid_list, crawled_list) # reset
