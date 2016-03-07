@@ -156,11 +156,19 @@ class Spider(object):
         url = 'http://www.weibo.com/u/%s' % (uid,)
         while True:
             html = open_url(fetcher, url)
-            with open('debug_get_pid.txt', 'w') as pen:
-                pen.write(html)
+
+            parsed_uid = self.parser.parse_uid(html)
+            if parsed_uid == -1:
+                self.ban_account()
+                continue
+            elif self.parser.is_visitor(html) is True:
+                self.reset_account()
+                continue # make sure that the html is correct.
+
             is_enterprise = self.parser.parse_is_enterprise(html)
             if is_enterprise is True:
                 return -1 # -1 denotes this user is an enterprise
+
             pid = self.parser.parse_pid(html)
             if pid is not None:
                 return pid
